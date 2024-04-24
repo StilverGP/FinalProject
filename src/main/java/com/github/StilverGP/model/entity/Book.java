@@ -5,22 +5,29 @@ import java.util.Objects;
 
 public class Book {
 
+    private Integer id_book;
     private String cod_book;
     private LocalDate checkIn_date;
     private LocalDate checkOut_date;
-    private int id_user;
-    private int id_room;
+    private User user;
+    private Room room;
 
-    public Book(String cod_book, LocalDate checkIn_date, LocalDate checkOut_date, int id_user, int id_room) {
+    public Book(String cod_book, LocalDate checkIn_date, LocalDate checkOut_date, User user, Room room) {
         this.cod_book = cod_book;
         this.checkIn_date = checkIn_date;
         this.checkOut_date = checkOut_date;
-        this.id_user = id_user;
-        this.id_room = id_room;
+        this.user = user;
+        this.room = room;
     }
 
-    public Book() {
-        this("",LocalDate.now(),LocalDate.now(),0,0);
+    public Book() {}
+
+    public Integer getId_book() {
+        return id_book;
+    }
+
+    public void setId_book(Integer id_book) {
+        this.id_book = id_book;
     }
 
     public String getCod_book() {
@@ -47,20 +54,20 @@ public class Book {
         this.checkOut_date = checkOut_date;
     }
 
-    public int getId_user() {
-        return id_user;
+    public User getUser() {
+        return user;
     }
 
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public int getId_room() {
-        return id_room;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setId_room(int id_room) {
-        this.id_room = id_room;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     @Override

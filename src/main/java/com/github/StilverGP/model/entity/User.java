@@ -5,7 +5,7 @@ import com.github.StilverGP.utils.Security;
 import java.util.Objects;
 
 public class User {
-    private int id_user;
+    private Integer id_user;
     private String dni;
     private String name;
     private String username;
@@ -13,8 +13,7 @@ public class User {
     private String mail;
     private String phone;
 
-    public User(int id_user, String dni, String name,String username, String password, String mail, String phone) {
-        this.id_user = id_user;
+    public User(String dni, String name,String username, String password, String mail, String phone) {
         this.dni = dni;
         this.name = name;
         this.username = username;
@@ -23,15 +22,13 @@ public class User {
         this.phone = phone;
     }
 
-    public User() {
-        this(0,"","","","","","");
-    }
+    public User() {}
 
-    public int getId_user() {
+    public Integer getId_user() {
         return id_user;
     }
 
-    public void setId_user(int id_user) {
+    public void setId_user(Integer id_user) {
         this.id_user = id_user;
     }
 
@@ -54,6 +51,10 @@ public class User {
     public String getUsername() {return username;}
 
     public void setUsername(String username) {this.username = username;}
+
+    public String getPassword() {
+        return password;
+    }
 
     public void setPassword(String password) {
         this.password = Security.hashPassword(password);
@@ -84,7 +85,7 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id_user == user.id_user || Objects.equals(dni, user.dni) || Objects.equals(mail, user.mail) || Objects.equals(phone, user.phone);
+        return Objects.equals(id_user, user.id_user) || Objects.equals(dni, user.dni) || Objects.equals(mail, user.mail) || Objects.equals(phone, user.phone);
     }
 
     @Override

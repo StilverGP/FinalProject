@@ -3,13 +3,16 @@ package com.github.StilverGP.model.entity;
 import java.util.Objects;
 
 public class Room {
-    private int roomNumber;
+    private Integer id_room;
+    String imagePath;
+    private Integer roomNumber;
     private RoomType roomType;
-    private int numberOfBeds;
+    private Integer numberOfBeds;
     private double priceNight;
-    private boolean available;
+    private Boolean available;
 
-    public Room(int roomNumber, RoomType roomType, int numberOfBeds, double priceNight, boolean available) {
+    public Room(String imagePath, Integer roomNumber, RoomType roomType, Integer numberOfBeds, double priceNight, Boolean available) {
+        this.imagePath = imagePath;
         this.roomNumber = roomNumber;
         this.roomType = roomType;
         this.numberOfBeds = numberOfBeds;
@@ -17,15 +20,29 @@ public class Room {
         this.available = available;
     }
 
-    public Room() {
-        this(0,RoomType.STANDARD,0,0.00,true);
+    public Room() {}
+
+    public Integer getId_Room() {
+        return id_room;
     }
 
-    public int getRoomNumber() {
+    public void setId_room(Integer id_room) {
+        this.id_room = id_room;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public Integer getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(int roomNumber) {
+    public void setRoomNumber(Integer roomNumber) {
         this.roomNumber = roomNumber;
     }
 
@@ -37,11 +54,11 @@ public class Room {
         this.roomType = roomType;
     }
 
-    public int getNumberOfBeds() {
+    public Integer getNumberOfBeds() {
         return numberOfBeds;
     }
 
-    public void setNumberOfBeds(int numberOfBeds) {
+    public void setNumberOfBeds(Integer numberOfBeds) {
         this.numberOfBeds = numberOfBeds;
     }
 
@@ -53,11 +70,11 @@ public class Room {
         this.priceNight = priceNight;
     }
 
-    public boolean isAvailable() {
+    public Boolean isAvailable() {
         return available;
     }
 
-    public void setAvailable(boolean available) {
+    public void setAvailable(Boolean available) {
         this.available = available;
     }
 
@@ -66,17 +83,19 @@ public class Room {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return roomNumber == room.roomNumber;
+        return Objects.equals(roomNumber, room.roomNumber) || Objects.equals(id_room, room.id_room);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(roomNumber);
+        return Objects.hashCode(id_room);
     }
 
     @Override
     public String toString() {
         return "Room{" +
+                "id_room=" + id_room +
+                "imagePath" + imagePath +
                 "roomNumber=" + roomNumber +
                 ", roomType=" + roomType +
                 ", numberOfBeds=" + numberOfBeds +
@@ -84,4 +103,5 @@ public class Room {
                 ", available=" + available +
                 '}';
     }
+
 }
