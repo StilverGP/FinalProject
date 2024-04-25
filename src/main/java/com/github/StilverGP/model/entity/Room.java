@@ -78,6 +78,15 @@ public class Room {
         this.available = available;
     }
 
+    public RoomType setRoomTypeValue(String value) {
+        RoomType type = null;
+        if (value.toLowerCase().matches("standard")) type = RoomType.STANDARD;
+        if (value.toLowerCase().matches("suite")) type = RoomType.SUITE;
+        if (value.toLowerCase().matches("family")) type = RoomType.FAMILY;
+        if (value.toLowerCase().matches("deluxe")) type = RoomType.DELUXE;
+        return type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,8 +104,8 @@ public class Room {
     public String toString() {
         return "Room{" +
                 "id_room=" + id_room +
-                "imagePath" + imagePath +
-                "roomNumber=" + roomNumber +
+                ", imagePath=" + imagePath +
+                ", roomNumber=" + roomNumber +
                 ", roomType=" + roomType +
                 ", numberOfBeds=" + numberOfBeds +
                 ", priceNight=" + priceNight +
