@@ -82,4 +82,16 @@ public class Book {
     public int hashCode() {
         return Objects.hashCode(cod_book);
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id_book=" + id_book +
+                ", cod_book='" + cod_book + '\'' +
+                ", checkIn_date=" + checkIn_date +
+                ", checkOut_date=" + checkOut_date +
+                ", user=" + user +
+                ", room=" + room +
+                '}';
+    }
 }

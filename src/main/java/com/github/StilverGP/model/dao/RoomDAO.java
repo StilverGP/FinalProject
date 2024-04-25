@@ -29,12 +29,12 @@ public class RoomDAO implements DAO<Room, Integer> {
     @Override
     public Room add(Room entity) {
         Room room = entity;
-        if (entity!=null) {
+        if (entity != null) {
             int roomNumber = entity.getRoomNumber();
             if (roomNumber > -1) {
                 Room isInDataBase = findById(roomNumber);
-                if (isInDataBase != null) {
-                    try (PreparedStatement pst = conn.prepareStatement(INSERT)){
+                if (isInDataBase == null) {
+                    try (PreparedStatement pst = conn.prepareStatement(INSERT)) {
                         pst.setString(1, entity.getImagePath());
                         pst.setInt(2, entity.getRoomNumber());
                         pst.setString(3, String.valueOf(entity.getRoomType()));
@@ -54,12 +54,12 @@ public class RoomDAO implements DAO<Room, Integer> {
     @Override
     public Room update(Room entity) {
         Room room = entity;
-        if (entity!=null) {
+        if (entity != null) {
             int roomNumber = entity.getRoomNumber();
             if (roomNumber > -1) {
                 Room isInDataBase = findById(roomNumber);
-                if (isInDataBase != null) {
-                    try (PreparedStatement pst = conn.prepareStatement(UPDATE)){
+                if (isInDataBase == null) {
+                    try (PreparedStatement pst = conn.prepareStatement(UPDATE)) {
                         pst.setInt(1, entity.getRoomNumber());
                         pst.setInt(2, entity.getId_Room());
                         pst.executeUpdate();
@@ -74,12 +74,12 @@ public class RoomDAO implements DAO<Room, Integer> {
 
     public Room updatePrice(Room entity) {
         Room room = entity;
-        if (entity!=null) {
+        if (entity != null) {
             int roomNumber = entity.getRoomNumber();
             if (roomNumber > -1) {
                 Room isInDataBase = findById(roomNumber);
-                if (isInDataBase != null) {
-                    try (PreparedStatement pst = conn.prepareStatement(UPDATEPRICE)){
+                if (isInDataBase == null) {
+                    try (PreparedStatement pst = conn.prepareStatement(UPDATEPRICE)) {
                         pst.setDouble(1, entity.getPriceNight());
                         pst.setInt(2, entity.getId_Room());
                         pst.executeUpdate();
@@ -95,12 +95,12 @@ public class RoomDAO implements DAO<Room, Integer> {
 
     public Room updateAvailability(Room entity) {
         Room room = entity;
-        if (entity!=null) {
+        if (entity != null) {
             int roomNumber = entity.getRoomNumber();
             if (roomNumber > -1) {
                 Room isInDataBase = findById(roomNumber);
-                if (isInDataBase != null) {
-                    try (PreparedStatement pst = conn.prepareStatement(UPDATEAVAILABILITY)){
+                if (isInDataBase == null) {
+                    try (PreparedStatement pst = conn.prepareStatement(UPDATEAVAILABILITY)) {
                         pst.setBoolean(1, entity.isAvailable());
                         pst.setInt(2, entity.getId_Room());
                         pst.executeUpdate();
@@ -117,7 +117,7 @@ public class RoomDAO implements DAO<Room, Integer> {
     @Override
     public Room findById(Integer id) {
         Room result = null;
-        try(PreparedStatement pst = conn.prepareStatement(FINDBYID)) {
+        try (PreparedStatement pst = conn.prepareStatement(FINDBYID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
@@ -125,7 +125,7 @@ public class RoomDAO implements DAO<Room, Integer> {
                     room.setId_room(rs.getInt("id_room"));
                     room.setImagePath(rs.getString("image"));
                     room.setRoomNumber(rs.getInt("room_number"));
-                    room.setRoomType(RoomType.valueOf(rs.getString("room_type")));
+                    room.setRoomType(room.setRoomTypeValue(rs.getString("room_type")));
                     room.setNumberOfBeds(rs.getInt("number_beds"));
                     room.setPriceNight(rs.getDouble("price_night"));
                     room.setAvailable(rs.getBoolean("available"));
@@ -140,7 +140,7 @@ public class RoomDAO implements DAO<Room, Integer> {
 
     public Room findByType(RoomType type) {
         Room result = null;
-        try(PreparedStatement pst = conn.prepareStatement(FINDBYTYPE)) {
+        try (PreparedStatement pst = conn.prepareStatement(FINDBYTYPE)) {
             pst.setString(1, String.valueOf(type));
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {

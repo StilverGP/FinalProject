@@ -11,9 +11,9 @@ import java.sql.SQLException;
 
 public class UserDAO implements DAO<User, String> {
     private static final String INSERT = "INSERT into User(dni, name, username, password, mail, phone) VALUES (?,?,?,?,?,?)";
-    private static final String UPDATEUSERNAME = "UPDATE User SET name=? where id_user=?";
+    private static final String UPDATEUSERNAME = "UPDATE User SET username=? where id_user=?";
     private static final String UPDATENAME = "UPDATE User SET name=? where id_user=?";
-    private static final String UPDATEMAIL = "UPDATE User SET name=? where id_user=?";
+    private static final String UPDATEMAIL = "UPDATE User SET mail=? where id_user=?";
     private static final String FINDBYID = "SELECT id_user, dni, name, username, password, mail, phone FROM User WHERE username = ?";
     private static final String DELETE = "DELETE FROM User WHERE id_user=?";
 
@@ -30,7 +30,7 @@ public class UserDAO implements DAO<User, String> {
             String dni = entity.getDni();
             if (dni != null) {
                 User isInDataBase = findById(dni);
-                if (isInDataBase != null) {
+                if (isInDataBase == null) {
                     try (PreparedStatement pst = conn.prepareStatement(INSERT)) {
                         pst.setString(1, entity.getDni());
                         pst.setString(2, entity.getName());
@@ -55,10 +55,10 @@ public class UserDAO implements DAO<User, String> {
             String dni = entity.getDni();
             if (dni != null) {
                 User isInDataBase = findById(dni);
-                if (isInDataBase != null) {
-                    try(PreparedStatement pst = conn.prepareStatement(UPDATEUSERNAME)) {
+                if (isInDataBase == null) {
+                    try (PreparedStatement pst = conn.prepareStatement(UPDATEUSERNAME)) {
                         pst.setString(1, entity.getUsername());
-                        pst.setInt(2,entity.getId_user());
+                        pst.setInt(2, entity.getId_user());
                         pst.executeUpdate();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -75,10 +75,10 @@ public class UserDAO implements DAO<User, String> {
             String dni = entity.getDni();
             if (dni != null) {
                 User isInDataBase = findById(dni);
-                if (isInDataBase != null) {
-                    try(PreparedStatement pst = conn.prepareStatement(UPDATENAME)) {
+                if (isInDataBase == null) {
+                    try (PreparedStatement pst = conn.prepareStatement(UPDATENAME)) {
                         pst.setString(1, entity.getName());
-                        pst.setInt(2,entity.getId_user());
+                        pst.setInt(2, entity.getId_user());
                         pst.executeUpdate();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -95,10 +95,10 @@ public class UserDAO implements DAO<User, String> {
             String dni = entity.getDni();
             if (dni != null) {
                 User isInDataBase = findById(dni);
-                if (isInDataBase != null) {
-                    try(PreparedStatement pst = conn.prepareStatement(UPDATEMAIL)) {
+                if (isInDataBase == null) {
+                    try (PreparedStatement pst = conn.prepareStatement(UPDATEMAIL)) {
                         pst.setString(1, entity.getMail());
-                        pst.setInt(2,entity.getId_user());
+                        pst.setInt(2, entity.getId_user());
                         pst.executeUpdate();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -112,9 +112,9 @@ public class UserDAO implements DAO<User, String> {
     @Override
     public User findById(String id) {
         User result = null;
-        try(PreparedStatement pst = conn.prepareStatement(FINDBYID)) {
+        try (PreparedStatement pst = conn.prepareStatement(FINDBYID)) {
             pst.setString(1, id);
-            try(ResultSet rs = pst.executeQuery()) {
+            try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
                     User user = new User();
                     user.setId_user(rs.getInt("id_user"));
@@ -135,11 +135,11 @@ public class UserDAO implements DAO<User, String> {
 
     @Override
     public User delete(User entity) {
-        if (entity!=null) {
-            try(PreparedStatement pst = conn.prepareStatement(DELETE)) {
+        if (entity != null) {
+            try (PreparedStatement pst = conn.prepareStatement(DELETE)) {
                 pst.setInt(1, entity.getId_user());
                 pst.executeUpdate();
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
                 entity = null;
             }
