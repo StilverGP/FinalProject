@@ -38,8 +38,8 @@ public class BookDAO implements DAO<Book, String> {
                         pst.setString(1, entity.getCod_book());
                         pst.setDate(2, Date.valueOf(entity.getCheckIn_date()));
                         pst.setDate(3, Date.valueOf(entity.getCheckOut_date()));
-                        pst.setInt(4, entity.getUser().getId_user());
-                        pst.setInt(5, entity.getRoom().getId_Room());
+                        pst.setString(4, entity.getUser().getUsername());
+                        pst.setInt(5, entity.getRoom().getRoomNumber());
                         pst.executeUpdate();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -123,8 +123,8 @@ public class BookDAO implements DAO<Book, String> {
                     book.setCod_book(rs.getString("cod_book"));
                     book.setCheckIn_date(rs.getDate("checkIn_date").toLocalDate());
                     book.setCheckOut_date(rs.getDate("checkOut_date").toLocalDate());
-                    UserDAO aDAO = new UserDAO();
-                    book.setUser(aDAO.findById(rs.getString("id_user")));
+                    UserDAO uDAO = new UserDAO();
+                    book.setUser(uDAO.findById(rs.getString("id_user")));
                     RoomDAO rDAO = new RoomDAO();
                     book.setRoom(rDAO.findById(rs.getInt("id_room")));
                     result = book;
@@ -140,7 +140,7 @@ public class BookDAO implements DAO<Book, String> {
         List<Book> books = new ArrayList<>();
         if (user != null) {
             try (PreparedStatement pst = conn.prepareStatement(FINDBYUSER)) {
-                pst.setInt(1, user.getId_user());
+                pst.setString(1, user.getUsername());
                 try (ResultSet rs = pst.executeQuery()) {
                     while (rs.next()) {
                         Book book = new Book();
