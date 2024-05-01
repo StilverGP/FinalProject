@@ -3,6 +3,7 @@ module com.github.StilverGP {
     requires javafx.fxml;
     requires java.xml.bind;
     requires java.sql;
+    requires java.desktop;
 
     opens com.github.StilverGP to javafx.fxml;
     opens com.github.StilverGP.model.connection to java.xml.bind;

@@ -77,7 +77,7 @@ public class BookDAO implements DAO<Book, String> {
             String cod_book = entity.getCod_book();
             if (cod_book != null) {
                 Book isInDataBase = findById(cod_book);
-                if (isInDataBase == null) {
+                if (isInDataBase != null) {
                     try (PreparedStatement pst = conn.prepareStatement(UPDATECHECKINDATE)) {
                         pst.setDate(1, Date.valueOf(entity.getCheckIn_date()));
                         pst.setInt(2, entity.getId_book());
@@ -97,7 +97,7 @@ public class BookDAO implements DAO<Book, String> {
             String cod_book = entity.getCod_book();
             if (cod_book != null) {
                 Book isInDataBase = findById(cod_book);
-                if (isInDataBase == null) {
+                if (isInDataBase != null) {
                     try (PreparedStatement pst = conn.prepareStatement(UPDATECHECKOUTDATE)) {
                         pst.setDate(1, Date.valueOf(entity.getCheckOut_date()));
                         pst.setInt(2, entity.getId_book());
@@ -194,6 +194,7 @@ public class BookDAO implements DAO<Book, String> {
                 pst.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
+                entity = null;
             }
         }
         return entity;

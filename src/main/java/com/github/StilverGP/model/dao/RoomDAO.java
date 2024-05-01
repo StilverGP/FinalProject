@@ -4,7 +4,13 @@ import com.github.StilverGP.model.connection.ConnectionMariaDB;
 import com.github.StilverGP.model.entity.Room;
 import com.github.StilverGP.model.entity.RoomType;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +43,7 @@ public class RoomDAO implements DAO<Room, Integer> {
                 Room isInDataBase = findById(roomNumber);
                 if (isInDataBase == null) {
                     try (PreparedStatement pst = conn.prepareStatement(INSERT)) {
-                        pst.setString(1, entity.getImagePath());
+                        pst.setBinaryStream(1, imageToStream(entity.getImage()));
                         pst.setInt(2, entity.getRoomNumber());
                         pst.setString(3, String.valueOf(entity.getRoomType()));
                         pst.setInt(4, entity.getNumberOfBeds());
@@ -125,7 +131,9 @@ public class RoomDAO implements DAO<Room, Integer> {
                 if (rs.next()) {
                     Room room = new Room();
                     room.setId_room(rs.getInt("id_room"));
-                    room.setImagePath(rs.getString("image"));
+                    InputStream is = rs.getBinaryStream("image");
+                    Image image = ImageIO.read(is);
+                    room.setImage(image);
                     room.setRoomNumber(rs.getInt("room_number"));
                     room.setRoomType(room.setRoomTypeValue(rs.getString("room_type")));
                     room.setNumberOfBeds(rs.getInt("number_beds"));
@@ -133,6 +141,8 @@ public class RoomDAO implements DAO<Room, Integer> {
                     room.setAvailable(rs.getBoolean("available"));
                     result = room;
                 }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -148,7 +158,9 @@ public class RoomDAO implements DAO<Room, Integer> {
                 while (rs.next()) {
                     Room room = new Room();
                     room.setId_room(rs.getInt("id_room"));
-                    room.setImagePath(rs.getString("image"));
+                    InputStream is = rs.getBinaryStream("image");
+                    Image image = ImageIO.read(is);
+                    room.setImage(image);
                     room.setRoomNumber(rs.getInt("room_number"));
                     room.setRoomType(RoomType.valueOf(rs.getString("room_type")));
                     room.setNumberOfBeds(rs.getInt("number_beds"));
@@ -156,6 +168,8 @@ public class RoomDAO implements DAO<Room, Integer> {
                     room.setAvailable(rs.getBoolean("available"));
                     rooms.add(room);
                 }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -172,7 +186,9 @@ public class RoomDAO implements DAO<Room, Integer> {
                 while (rs.next()) {
                     Room room = new Room();
                     room.setId_room(rs.getInt("id_room"));
-                    room.setImagePath(rs.getString("image"));
+                    InputStream is = rs.getBinaryStream("image");
+                    Image image = ImageIO.read(is);
+                    room.setImage(image);
                     room.setRoomNumber(rs.getInt("room_number"));
                     room.setRoomType(RoomType.valueOf(rs.getString("room_type")));
                     room.setNumberOfBeds(rs.getInt("number_beds"));
@@ -180,6 +196,8 @@ public class RoomDAO implements DAO<Room, Integer> {
                     room.setAvailable(rs.getBoolean("available"));
                     rooms.add(room);
                 }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -204,5 +222,30 @@ public class RoomDAO implements DAO<Room, Integer> {
     @Override
     public void close() throws IOException {
 
+    }
+
+    public InputStream imageToStream(Image image) {
+        ByteArrayInputStream bais = null;
+        if (image != null) {
+            try {
+                BufferedImage bi = toBufferedImage(image);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(bi, "jpg", baos);
+                bais = new ByteArrayInputStream(baos.toByteArray());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return bais;
+    }
+
+    public BufferedImage toBufferedImage(Image image) {
+        BufferedImage bimage = null;
+        if (image != null) {
+            bimage = new BufferedImage(image.getWidth(null),
+                    image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+            bimage.getGraphics().drawImage(image, 0, 0, null);
+        }
+        return bimage;
     }
 }
