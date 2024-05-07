@@ -11,10 +11,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +20,7 @@ public class RoomDAO implements DAO<Room, Integer> {
     private static final String UPDATE = "UPDATE Room SET room_number=? WHERE id_room=?";
     private static final String UPDATEPRICE = "UPDATE Room SET price_night=? WHERE room_number=?";
     private static final String UPDATEAVAILABILITY = "UPDATE Room SET available=? WHERE room_number=?";
+    private static final String FINDALL = "SELECT id_room, image, room_number, room_type, number_beds, price_night, available FROM Room";
     private static final String FINDBYID = "SELECT id_room, image, room_number, room_type, number_beds, price_night, available FROM Room WHERE room_number=?";
     private static final String FINDBYTYPE = "SELECT id_room, image, room_number, room_type, number_beds, price_night, available FROM Room WHERE room_type=?";
     private static final String FINDBYBEDS = "SELECT id_room, image, room_number, room_type, number_beds, price_night, available FROM Room WHERE number_beds=?";
@@ -120,6 +118,34 @@ public class RoomDAO implements DAO<Room, Integer> {
             }
         }
         return room;
+    }
+
+    public List<Room> findAll() {
+        List<Room> rooms = new ArrayList<>();
+        try (PreparedStatement pst = conn.prepareStatement(FINDALL)){
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Room room = new Room();
+                    room.setId_room(rs.getInt("id_room"));
+                    InputStream is = rs.getBinaryStream("image");
+                    if (is != null) {
+                        Image image = ImageIO.read(is);
+                        room.setImage(image);
+                    }
+                    room.setRoomNumber(rs.getInt("room_number"));
+                    room.setRoomType(room.setRoomTypeValue(rs.getString("room_type")));
+                    room.setNumberOfBeds(rs.getInt("number_beds"));
+                    room.setPriceNight(rs.getDouble("price_night"));
+                    room.setAvailable(rs.getBoolean("available"));
+                    rooms.add(room);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+        return rooms;
     }
 
     @Override

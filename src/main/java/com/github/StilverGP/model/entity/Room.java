@@ -88,6 +88,22 @@ public class Room {
         return type;
     }
 
+    public String getRoomTypeValue(RoomType type) {
+        String typeValue = "";
+        if (type == RoomType.STANDARD) typeValue = "standard";
+        if (type == RoomType.SUITE) typeValue = "suite";
+        if (type == RoomType.FAMILY) typeValue = "family";
+        if (type == RoomType.DELUXE) typeValue = "deluxe";
+        return typeValue;
+    }
+
+    public String getAvailabilityValue(Boolean available) {
+        String abailavilityValue = "";
+        if (available) abailavilityValue = "disponible";
+        if (!available) abailavilityValue = "ocupada";
+        return abailavilityValue;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
