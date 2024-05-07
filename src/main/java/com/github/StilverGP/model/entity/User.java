@@ -12,6 +12,7 @@ public class User {
     private String password;
     private String mail;
     private String phone;
+    private boolean isAdmin;
 
     public User(String dni, String name,String username, String password, String mail, String phone) {
         this.dni = dni;
@@ -20,6 +21,7 @@ public class User {
         setPassword(password);
         this.mail = mail;
         this.phone = phone;
+        this.isAdmin = false;
     }
 
     public User() {}
@@ -78,6 +80,14 @@ public class User {
 
     public boolean isMyPassword(String password) {
         return this.password.equals(Security.hashPassword(password));
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     @Override
