@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.Objects;
 
 public class Room {
-    private Integer id_room;
+    private Integer id;
     private Image image;
     private Integer roomNumber;
     private RoomType roomType;
@@ -24,11 +24,11 @@ public class Room {
     public Room() {}
 
     public Integer getId_Room() {
-        return id_room;
+        return id;
     }
 
-    public void setId_room(Integer id_room) {
-        this.id_room = id_room;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Image getImage() {
@@ -109,18 +109,18 @@ public class Room {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return Objects.equals(roomNumber, room.roomNumber) || Objects.equals(id_room, room.id_room);
+        return Objects.equals(roomNumber, room.roomNumber) || Objects.equals(id, room.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id_room);
+        return Objects.hashCode(id);
     }
 
     @Override
     public String toString() {
         return "Room{" +
-                "id_room=" + id_room +
+                "id_room=" + id +
                 ", imagePath=" + image +
                 ", roomNumber=" + roomNumber +
                 ", roomType=" + roomType +

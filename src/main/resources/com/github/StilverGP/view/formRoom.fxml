@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -10,13 +11,14 @@
    <children>
       <AnchorPane prefHeight="479.0" prefWidth="600.0">
          <children>
-            <Button layoutX="241.0" layoutY="65.0" mnemonicParsing="false" onAction="#addImage" text="Seleccionar imagen" />
+            <Button layoutX="241.0" layoutY="60.0" mnemonicParsing="false" onAction="#imageSelector" text="Seleccionar imagen" />
             <TextField fx:id="roomNumber" layoutX="201.0" layoutY="111.0" prefHeight="25.0" prefWidth="202.0" promptText="Introduce el número de habitación" />
             <TextField fx:id="roomType" layoutX="212.0" layoutY="150.0" prefHeight="25.0" prefWidth="180.0" promptText="Introduce el tipo de habitación" />
             <TextField fx:id="roomBeds" layoutX="212.0" layoutY="188.0" prefHeight="25.0" prefWidth="180.0" promptText="Introduce el numero de camas" />
             <TextField fx:id="roomPrice" layoutX="226.0" layoutY="225.0" promptText="Introduce el precio" />
             <CheckBox fx:id="roomAvailable" layoutX="263.0" layoutY="263.0" mnemonicParsing="false" text="Disponible" />
-            <Button layoutX="275.0" layoutY="290.0" mnemonicParsing="false" onAction="#addRoom" text="Button" />
+            <Button layoutX="275.0" layoutY="290.0" mnemonicParsing="false" onAction="#addRoom" text="Añadir" />
+            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
          </children></AnchorPane>
    </children>
 </VBox>

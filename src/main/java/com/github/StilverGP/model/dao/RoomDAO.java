@@ -126,7 +126,7 @@ public class RoomDAO implements DAO<Room, Integer> {
             try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
                     Room room = new Room();
-                    room.setId_room(rs.getInt("id_room"));
+                    room.setId(rs.getInt("id_room"));
                     InputStream is = rs.getBinaryStream("image");
                     if (is != null) {
                         Image image = ImageIO.read(is);
@@ -156,7 +156,7 @@ public class RoomDAO implements DAO<Room, Integer> {
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
                     Room room = new Room();
-                    room.setId_room(rs.getInt("id_room"));
+                    room.setId(rs.getInt("id_room"));
                     InputStream is = rs.getBinaryStream("image");
                     Image image = ImageIO.read(is);
                     room.setImage(image);
@@ -183,7 +183,7 @@ public class RoomDAO implements DAO<Room, Integer> {
             try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
                     Room room = new Room();
-                    room.setId_room(rs.getInt("id_room"));
+                    room.setId(rs.getInt("id_room"));
                     InputStream is = rs.getBinaryStream("image");
                     Image image = ImageIO.read(is);
                     room.setImage(image);
@@ -211,7 +211,7 @@ public class RoomDAO implements DAO<Room, Integer> {
             try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
                     Room room = new Room();
-                    room.setId_room(rs.getInt("id_room"));
+                    room.setId(rs.getInt("id_room"));
                     InputStream is = rs.getBinaryStream("image");
                     Image image = ImageIO.read(is);
                     room.setImage(image);
