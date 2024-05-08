@@ -5,7 +5,7 @@ import com.github.StilverGP.utils.Security;
 import java.util.Objects;
 
 public class User {
-    private Integer id_user;
+    private Integer id;
     private String dni;
     private String name;
     private String username;
@@ -26,12 +26,12 @@ public class User {
 
     public User() {}
 
-    public Integer getId_user() {
-        return id_user;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_user(Integer id_user) {
-        this.id_user = id_user;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDni() {
@@ -95,18 +95,18 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id_user, user.id_user) || Objects.equals(dni, user.dni) || Objects.equals(mail, user.mail) || Objects.equals(phone, user.phone);
+        return Objects.equals(id, user.id) || Objects.equals(dni, user.dni) || Objects.equals(mail, user.mail) || Objects.equals(phone, user.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_user, dni, mail, phone);
+        return Objects.hash(id, dni, mail, phone);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id_user=" + id_user +
+                "id_user=" + id +
                 ", dni='" + dni + '\'' +
                 ", name='" + name + '\'' +
                 ", username='" + username + '\'' +

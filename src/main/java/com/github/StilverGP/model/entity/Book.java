@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Book {
 
-    private Integer id_book;
+    private Integer id;
     private String cod_book;
     private LocalDate checkIn_date;
     private LocalDate checkOut_date;
@@ -22,12 +22,12 @@ public class Book {
 
     public Book() {}
 
-    public Integer getId_book() {
-        return id_book;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_book(Integer id_book) {
-        this.id_book = id_book;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCod_book() {
@@ -86,7 +86,7 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "id_book=" + id_book +
+                "id_book=" + id +
                 ", cod_book='" + cod_book + '\'' +
                 ", checkIn_date=" + checkIn_date +
                 ", checkOut_date=" + checkOut_date +

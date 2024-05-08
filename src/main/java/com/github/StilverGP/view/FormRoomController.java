@@ -9,17 +9,20 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FormRoomController extends Controller implements Initializable {
+    @FXML
+    private ImageView imageView;
 
     @FXML
     private TextField roomNumber;
@@ -48,7 +51,18 @@ public class FormRoomController extends Controller implements Initializable {
         Room roomExists = roomDAO.findById(Integer.valueOf(roomNumber.getText()));
         if (roomExists == null) {
             Room room = new Room();
-            room.setImage(imageSelector(event));
+            Window window = ((Node)(event.getSource())).getScene().getWindow();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Selecciona una imagen");
+            FileChooser.ExtensionFilter extFilter =
+                    new FileChooser.ExtensionFilter("Imágen", "*.jpg", "*.png", "*.jpeg");
+            fileChooser.getExtensionFilters().add(extFilter);
+            File file = fileChooser.showOpenDialog(window);
+            Image image = new Image(file.toURI().toString());
+            imageView.setImage(image);
+            imageView.setFitHeight(500);
+            imageView.setFitWidth(500);
+            room.setImage(ImageIO.read(file));
             room.setRoomNumber(Integer.valueOf(roomNumber.getText()));
             room.setRoomType(room.setRoomTypeValue(roomType.getText()));
             room.setNumberOfBeds(Integer.valueOf(roomBeds.getText()));
@@ -64,23 +78,8 @@ public class FormRoomController extends Controller implements Initializable {
         }
     }
 
-    public Image fileToImage(File file) throws IOException {
-        return ImageIO.read(file);
-    }
+    public void imageSelector(Event event) {
 
-    public void addImage(Event event) throws IOException {
-        imageSelector(event);
-    }
-
-    public Image imageSelector(Event event) throws IOException {
-        Window window = ((Node)(event.getSource())).getScene().getWindow();
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Selecciona una imagen");
-        FileChooser.ExtensionFilter extFilter =
-                new FileChooser.ExtensionFilter("Imágen", "*.jpg", "*.png", "*.jpeg");
-        fileChooser.getExtensionFilters().add(extFilter);
-        File file = fileChooser.showOpenDialog(window);
-        return fileToImage(file);
     }
 
     @Override
