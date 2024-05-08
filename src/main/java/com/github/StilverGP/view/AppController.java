@@ -1,6 +1,8 @@
 package com.github.StilverGP.view;
 
 import com.github.StilverGP.App;
+import com.github.StilverGP.model.dao.RoomDAO;
+import com.github.StilverGP.model.entity.Room;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -50,6 +52,15 @@ public class AppController extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    public void addRoom() throws IOException {
+        App.currentController.openModal(Scenes.FORMROOM, "Agregando habitación...",this, null);
+    }
+
+    public void saveRoom(Room room) {
+        RoomDAO roomDAO = new RoomDAO();
+        roomDAO.add(room);
     }
 
     public static View loadFXML(Scenes scenes) throws IOException {

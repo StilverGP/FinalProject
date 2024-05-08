@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -25,9 +24,6 @@ public class FormSignInController extends Controller implements Initializable {
 
     @FXML
     private TextField username;
-
-    @FXML
-    private CheckBox showPassword;
 
     @FXML
     private PasswordField password;

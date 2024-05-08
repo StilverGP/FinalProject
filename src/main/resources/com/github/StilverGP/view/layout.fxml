@@ -9,12 +9,25 @@
    <top>
     <MenuBar nodeOrientation="RIGHT_TO_LEFT" BorderPane.alignment="CENTER">
       <menus>
-            <Menu mnemonicParsing="false" text="Cuenta">
+            <Menu mnemonicParsing="false" text="Admin">
               <items>
-                <MenuItem mnemonicParsing="false" text="Configuración de cuenta" />
+                  <Menu mnemonicParsing="false" text="Modificar habitaciones">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#addRoom" text="Agregar habitacion" />
+                        <MenuItem mnemonicParsing="false" text="Cambiar numero de una habitacion" />
+                        <MenuItem mnemonicParsing="false" text="Cambiar precio de una habitacion" />
+                        <MenuItem mnemonicParsing="false" text="Cambiar disponibilidad de una habitacion" />
+                      <MenuItem mnemonicParsing="false" text="Eliminar habitacion" />
+                    </items>
+                  </Menu>
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Cuenta">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Configuración de cuenta" />
                   <MenuItem mnemonicParsing="false" text="Mis reservas" />
                   <MenuItem mnemonicParsing="false" text="Cerrar Sesión" />
-              </items>
+               </items>
             </Menu>
       </menus>
     </MenuBar>
