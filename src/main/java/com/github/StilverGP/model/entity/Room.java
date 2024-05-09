@@ -1,18 +1,19 @@
 package com.github.StilverGP.model.entity;
 
+import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 public class Room {
-    private Integer id_room;
-    String imagePath;
+    private Integer id;
+    private BufferedImage image;
     private Integer roomNumber;
     private RoomType roomType;
     private Integer numberOfBeds;
     private double priceNight;
     private Boolean available;
 
-    public Room(String imagePath, Integer roomNumber, RoomType roomType, Integer numberOfBeds, double priceNight, Boolean available) {
-        this.imagePath = imagePath;
+    public Room(BufferedImage image, Integer roomNumber, RoomType roomType, Integer numberOfBeds, double priceNight, Boolean available) {
+        this.image = image;
         this.roomNumber = roomNumber;
         this.roomType = roomType;
         this.numberOfBeds = numberOfBeds;
@@ -23,19 +24,19 @@ public class Room {
     public Room() {}
 
     public Integer getId_Room() {
-        return id_room;
+        return id;
     }
 
-    public void setId_room(Integer id_room) {
-        this.id_room = id_room;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public BufferedImage getImage() {
+        return image;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setImage(BufferedImage image) {
+        this.image = image;
     }
 
     public Integer getRoomNumber() {
@@ -87,24 +88,47 @@ public class Room {
         return type;
     }
 
+    public String getRoomTypeValue(RoomType type) {
+        String typeValue = "";
+        if (type == RoomType.STANDARD) typeValue = "standard";
+        if (type == RoomType.SUITE) typeValue = "suite";
+        if (type == RoomType.FAMILY) typeValue = "family";
+        if (type == RoomType.DELUXE) typeValue = "deluxe";
+        return typeValue;
+    }
+
+    public String getAvailabilityValue(Boolean available) {
+        String abailavilityValue = "";
+        if (available) abailavilityValue = "disponible";
+        if (!available) abailavilityValue = "ocupada";
+        return abailavilityValue;
+    }
+
+    public boolean setAvailabilityValue(String s) {
+        boolean available = true;
+        if (s.matches("disponible")) available = true;
+        if (s.matches("ocupada")) available = false;
+        return available;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return Objects.equals(roomNumber, room.roomNumber) || Objects.equals(id_room, room.id_room);
+        return Objects.equals(roomNumber, room.roomNumber) || Objects.equals(id, room.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id_room);
+        return Objects.hashCode(id);
     }
 
     @Override
     public String toString() {
         return "Room{" +
-                "id_room=" + id_room +
-                ", imagePath=" + imagePath +
+                "id_room=" + id +
+                ", image=" + image +
                 ", roomNumber=" + roomNumber +
                 ", roomType=" + roomType +
                 ", numberOfBeds=" + numberOfBeds +

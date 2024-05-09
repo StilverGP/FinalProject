@@ -58,7 +58,7 @@ public class UserDAO implements DAO<User, String> {
                 if (isInDataBase == null) {
                     try (PreparedStatement pst = conn.prepareStatement(UPDATEUSERNAME)) {
                         pst.setString(1, entity.getUsername());
-                        pst.setInt(2, entity.getId_user());
+                        pst.setInt(2, entity.getId());
                         pst.executeUpdate();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -78,7 +78,7 @@ public class UserDAO implements DAO<User, String> {
                 if (isInDataBase == null) {
                     try (PreparedStatement pst = conn.prepareStatement(UPDATENAME)) {
                         pst.setString(1, entity.getName());
-                        pst.setInt(2, entity.getId_user());
+                        pst.setInt(2, entity.getId());
                         pst.executeUpdate();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -98,7 +98,7 @@ public class UserDAO implements DAO<User, String> {
                 if (isInDataBase == null) {
                     try (PreparedStatement pst = conn.prepareStatement(UPDATEMAIL)) {
                         pst.setString(1, entity.getMail());
-                        pst.setInt(2, entity.getId_user());
+                        pst.setInt(2, entity.getId());
                         pst.executeUpdate();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -117,13 +117,14 @@ public class UserDAO implements DAO<User, String> {
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
                     User user = new User();
-                    user.setId_user(rs.getInt("id_user"));
+                    user.setId(rs.getInt("id_user"));
                     user.setDni(rs.getString("dni"));
                     user.setName(rs.getString("name"));
                     user.setUsername(rs.getString("username"));
                     user.setPassword(rs.getString("password"));
                     user.setMail(rs.getString("mail"));
                     user.setPhone(rs.getString("phone"));
+                    if (user.getUsername().equals("admin")) user.setAdmin(true);
                     result = user;
                 }
             }
@@ -137,7 +138,7 @@ public class UserDAO implements DAO<User, String> {
     public User delete(User entity) {
         if (entity != null) {
             try (PreparedStatement pst = conn.prepareStatement(DELETE)) {
-                pst.setInt(1, entity.getId_user());
+                pst.setInt(1, entity.getId());
                 pst.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();

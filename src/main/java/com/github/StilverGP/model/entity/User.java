@@ -5,13 +5,14 @@ import com.github.StilverGP.utils.Security;
 import java.util.Objects;
 
 public class User {
-    private Integer id_user;
+    private Integer id;
     private String dni;
     private String name;
     private String username;
     private String password;
     private String mail;
     private String phone;
+    private boolean isAdmin;
 
     public User(String dni, String name,String username, String password, String mail, String phone) {
         this.dni = dni;
@@ -20,16 +21,17 @@ public class User {
         setPassword(password);
         this.mail = mail;
         this.phone = phone;
+        this.isAdmin = false;
     }
 
     public User() {}
 
-    public Integer getId_user() {
-        return id_user;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_user(Integer id_user) {
-        this.id_user = id_user;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDni() {
@@ -80,23 +82,31 @@ public class User {
         return this.password.equals(Security.hashPassword(password));
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id_user, user.id_user) || Objects.equals(dni, user.dni) || Objects.equals(mail, user.mail) || Objects.equals(phone, user.phone);
+        return Objects.equals(id, user.id) || Objects.equals(dni, user.dni) || Objects.equals(mail, user.mail) || Objects.equals(phone, user.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_user, dni, mail, phone);
+        return Objects.hash(id, dni, mail, phone);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id_user=" + id_user +
+                "id_user=" + id +
                 ", dni='" + dni + '\'' +
                 ", name='" + name + '\'' +
                 ", username='" + username + '\'' +

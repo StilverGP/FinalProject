@@ -22,10 +22,14 @@ public class Session {
     }
 
     public void login(User user) {
-        if (loggedInUser == null) loggedInUser = user;
+        loggedInUser = user;
     }
 
     public void logout() {
         loggedInUser = null;
+    }
+
+    public boolean isAdmin() {
+        return loggedInUser.isAdmin();
     }
 }

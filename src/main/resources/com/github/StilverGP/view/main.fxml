@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.StilverGP.view.MainController">
+    <children>
+        <Label text="Habitaciones" />
+        <TableView fx:id="tableView">
+            <columns>
+                <TableColumn fx:id="imageColumn" prefWidth="95.0" text="Foto" />
+                <TableColumn fx:id="numberColumn" prefWidth="95.0" text="Nº Habitación" />
+                <TableColumn fx:id="typeColumn" prefWidth="114.0" text="Tipo de habitación" />
+                <TableColumn fx:id="bedsColumn" prefWidth="76.0" text="Nº de camas" />
+                <TableColumn fx:id="priceColumn" text="Precio/noche" />
+                <TableColumn fx:id="availabilityColumn" minWidth="0.0" prefWidth="102.0" text="Disponibilidad" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+        </TableView>
+    </children>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</VBox>

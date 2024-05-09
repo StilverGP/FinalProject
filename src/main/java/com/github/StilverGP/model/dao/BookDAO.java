@@ -60,7 +60,7 @@ public class BookDAO implements DAO<Book, String> {
                 if (isInDataBase == null) {
                     try (PreparedStatement pst = conn.prepareStatement(UPDATE)) {
                         pst.setString(1, entity.getCod_book());
-                        pst.setInt(2, entity.getId_book());
+                        pst.setInt(2, entity.getId());
                         pst.executeUpdate();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -77,10 +77,10 @@ public class BookDAO implements DAO<Book, String> {
             String cod_book = entity.getCod_book();
             if (cod_book != null) {
                 Book isInDataBase = findById(cod_book);
-                if (isInDataBase == null) {
+                if (isInDataBase != null) {
                     try (PreparedStatement pst = conn.prepareStatement(UPDATECHECKINDATE)) {
                         pst.setDate(1, Date.valueOf(entity.getCheckIn_date()));
-                        pst.setInt(2, entity.getId_book());
+                        pst.setInt(2, entity.getId());
                         pst.executeUpdate();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -97,10 +97,10 @@ public class BookDAO implements DAO<Book, String> {
             String cod_book = entity.getCod_book();
             if (cod_book != null) {
                 Book isInDataBase = findById(cod_book);
-                if (isInDataBase == null) {
+                if (isInDataBase != null) {
                     try (PreparedStatement pst = conn.prepareStatement(UPDATECHECKOUTDATE)) {
                         pst.setDate(1, Date.valueOf(entity.getCheckOut_date()));
-                        pst.setInt(2, entity.getId_book());
+                        pst.setInt(2, entity.getId());
                         pst.executeUpdate();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -119,7 +119,7 @@ public class BookDAO implements DAO<Book, String> {
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
                     Book book = new Book();
-                    book.setId_book(rs.getInt("id_book"));
+                    book.setId(rs.getInt("id_book"));
                     book.setCod_book(rs.getString("cod_book"));
                     book.setCheckIn_date(rs.getDate("checkIn_date").toLocalDate());
                     book.setCheckOut_date(rs.getDate("checkOut_date").toLocalDate());
@@ -144,7 +144,7 @@ public class BookDAO implements DAO<Book, String> {
                 try (ResultSet rs = pst.executeQuery()) {
                     while (rs.next()) {
                         Book book = new Book();
-                        book.setId_book(rs.getInt("id_book"));
+                        book.setId(rs.getInt("id_book"));
                         book.setCod_book(rs.getString("cod_book"));
                         book.setCheckIn_date(rs.getDate("checkIn_date").toLocalDate());
                         book.setCheckOut_date(rs.getDate("checkOut_date").toLocalDate());
@@ -169,7 +169,7 @@ public class BookDAO implements DAO<Book, String> {
                 try (ResultSet rs = pst.executeQuery()) {
                     while (rs.next()) {
                         Book book = new Book();
-                        book.setId_book(rs.getInt("id_book"));
+                        book.setId(rs.getInt("id_book"));
                         book.setCod_book(rs.getString("cod_book"));
                         book.setCheckIn_date(rs.getDate("checkIn_date").toLocalDate());
                         book.setCheckOut_date(rs.getDate("checkOut_date").toLocalDate());
@@ -190,10 +190,11 @@ public class BookDAO implements DAO<Book, String> {
     public Book delete(Book entity) {
         if (entity != null) {
             try (PreparedStatement pst = conn.prepareStatement(DELETE)) {
-                pst.setInt(1, entity.getId_book());
+                pst.setInt(1, entity.getId());
                 pst.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
+                entity = null;
             }
         }
         return entity;
