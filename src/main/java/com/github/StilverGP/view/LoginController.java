@@ -4,12 +4,12 @@ import com.github.StilverGP.App;
 import com.github.StilverGP.model.Session;
 import com.github.StilverGP.model.dao.UserDAO;
 import com.github.StilverGP.model.entity.User;
+import com.github.StilverGP.utils.Alerts;
 import com.github.StilverGP.utils.Security;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.Alert;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,11 +43,13 @@ public class LoginController extends Controller implements Initializable {
             login(user);
             App.currentController.changeScene(Scenes.MAIN, null);
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error de inicio de sesión");
-            alert.setContentText("Usuario o contraseña incorrectos, por favor intente nuevamente");
-            alert.show();
+            Alerts.showErrorAlert("Error de inicio de sesión",
+                    "Usuario o contraseña incorrectos, por favor intente nuevamente");
         }
+    }
+
+    public static boolean checkUserIsAdmin() {
+        return Session.getInstance().getLoggedInUser().isAdmin();
     }
 
     public void signIn() throws IOException {

@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -18,12 +19,15 @@ import java.util.ResourceBundle;
 
 public class AppController extends Controller implements Initializable {
     @FXML
+    private Menu admin;
+    @FXML
     private BorderPane borderPane;
+
     private Controller centerController;
 
     @Override
     public void onOpen(Object input) throws IOException {
-        changeScene(Scenes.LOGIN,null);
+        changeScene(Scenes.MAIN,null);
     }
 
     public void changeScene(Scenes scene,Object data) throws IOException {
@@ -31,6 +35,7 @@ public class AppController extends Controller implements Initializable {
         borderPane.setCenter(view.scene);
         this.centerController = view.controller;
         this.centerController.onOpen(data);
+        if (LoginController.checkUserIsAdmin()) userIsAdmin();
     }
 
     public void openModal(Scenes scene, String title,Controller parent, Object data) throws IOException {
@@ -61,6 +66,10 @@ public class AppController extends Controller implements Initializable {
     public void saveRoom(Room room) {
         RoomDAO roomDAO = new RoomDAO();
         roomDAO.add(room);
+    }
+
+    public void userIsAdmin() {
+        admin.setVisible(true);
     }
 
     public static View loadFXML(Scenes scenes) throws IOException {
