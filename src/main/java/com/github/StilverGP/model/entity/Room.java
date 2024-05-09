@@ -1,18 +1,18 @@
 package com.github.StilverGP.model.entity;
 
-import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 public class Room {
     private Integer id;
-    private Image image;
+    private BufferedImage image;
     private Integer roomNumber;
     private RoomType roomType;
     private Integer numberOfBeds;
     private double priceNight;
     private Boolean available;
 
-    public Room(Image image, Integer roomNumber, RoomType roomType, Integer numberOfBeds, double priceNight, Boolean available) {
+    public Room(BufferedImage image, Integer roomNumber, RoomType roomType, Integer numberOfBeds, double priceNight, Boolean available) {
         this.image = image;
         this.roomNumber = roomNumber;
         this.roomType = roomType;
@@ -31,11 +31,11 @@ public class Room {
         this.id = id;
     }
 
-    public Image getImage() {
+    public BufferedImage getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(BufferedImage image) {
         this.image = image;
     }
 
@@ -104,6 +104,13 @@ public class Room {
         return abailavilityValue;
     }
 
+    public boolean setAvailabilityValue(String s) {
+        boolean available = true;
+        if (s.matches("disponible")) available = true;
+        if (s.matches("ocupada")) available = false;
+        return available;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -121,7 +128,7 @@ public class Room {
     public String toString() {
         return "Room{" +
                 "id_room=" + id +
-                ", imagePath=" + image +
+                ", image=" + image +
                 ", roomNumber=" + roomNumber +
                 ", roomType=" + roomType +
                 ", numberOfBeds=" + numberOfBeds +

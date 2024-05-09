@@ -124,6 +124,7 @@ public class UserDAO implements DAO<User, String> {
                     user.setPassword(rs.getString("password"));
                     user.setMail(rs.getString("mail"));
                     user.setPhone(rs.getString("phone"));
+                    if (user.getUsername().equals("admin")) user.setAdmin(true);
                     result = user;
                 }
             }

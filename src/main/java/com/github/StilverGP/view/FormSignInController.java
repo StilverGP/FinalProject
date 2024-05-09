@@ -2,6 +2,7 @@ package com.github.StilverGP.view;
 
 import com.github.StilverGP.model.dao.UserDAO;
 import com.github.StilverGP.model.entity.User;
+import com.github.StilverGP.utils.Alerts;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -59,20 +60,15 @@ public class FormSignInController extends Controller implements Initializable {
         User userExists = userDAO.findById(username.getText());
         if (userExists == null) {
             if (password.getText().equals(confirmPassword.getText())) {
-                User user = new User(dni.getText(), name.getText(), username.getText(), password.getText(), email.getText(), phone.getText());
+                User user = new User(dni.getText(), name.getText(), username.getText(),
+                        password.getText(), email.getText(), phone.getText());
                 this.controller.saveUser(user);
                 ((Node)(event.getSource())).getScene().getWindow().hide();
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("Error al crear el usuario");
-                alert.setContentText("Contraseñas no coinciden");
-                alert.show();
+                Alerts.showErrorAlert("Error al crear el usuario", "Contraseñas no coinciden");
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error al crear el usuario");
-            alert.setContentText("El usuario ya existe");
-            alert.show();
+            Alerts.showErrorAlert("Error al crear el usuario", "El usuario ya existe");
         }
     }
 }

@@ -22,8 +22,8 @@ public class RoomDAO implements DAO<Room, Integer> {
     private static final String UPDATEAVAILABILITY = "UPDATE Room SET available=? WHERE room_number=?";
     private static final String FINDALL = "SELECT id_room, image, room_number, room_type, number_beds, price_night, available FROM Room";
     private static final String FINDBYID = "SELECT id_room, image, room_number, room_type, number_beds, price_night, available FROM Room WHERE room_number=?";
-    private static final String FINDBYTYPE = "SELECT id_room, image, room_number, room_type, number_beds, price_night, available FROM Room WHERE room_type=?";
-    private static final String FINDBYBEDS = "SELECT id_room, image, room_number, room_type, number_beds, price_night, available FROM Room WHERE number_beds=?";
+//    private static final String FINDBYTYPE = "SELECT id_room, image, room_number, room_type, number_beds, price_night, available FROM Room WHERE room_type=?";
+//    private static final String FINDBYBEDS = "SELECT id_room, image, room_number, room_type, number_beds, price_night, available FROM Room WHERE number_beds=?";
     private static final String DELETE = "DELETE FROM Room WHERE room_number=?";
 
     private Connection conn;
@@ -43,7 +43,7 @@ public class RoomDAO implements DAO<Room, Integer> {
                     try (PreparedStatement pst = conn.prepareStatement(INSERT)) {
                         pst.setBinaryStream(1, imageToStream(entity.getImage()));
                         pst.setInt(2, entity.getRoomNumber());
-                        pst.setString(3, String.valueOf(entity.getRoomType()));
+                        pst.setString(3, String.valueOf(entity.getRoomTypeValue(entity.getRoomType())));
                         pst.setInt(4, entity.getNumberOfBeds());
                         pst.setDouble(5, entity.getPriceNight());
                         pst.setBoolean(6, entity.isAvailable());
@@ -129,7 +129,7 @@ public class RoomDAO implements DAO<Room, Integer> {
                     room.setId(rs.getInt("id_room"));
                     InputStream is = rs.getBinaryStream("image");
                     if (is != null) {
-                        Image image = ImageIO.read(is);
+                        BufferedImage image = ImageIO.read(is);
                         room.setImage(image);
                     }
                     room.setRoomNumber(rs.getInt("room_number"));
@@ -157,8 +157,9 @@ public class RoomDAO implements DAO<Room, Integer> {
                 if (rs.next()) {
                     Room room = new Room();
                     room.setId(rs.getInt("id_room"));
-                    InputStream is = rs.getBinaryStream("image");
-                    Image image = ImageIO.read(is);
+                    Blob blob = rs.getBlob("image");
+                    InputStream is = blob.getBinaryStream();
+                    BufferedImage image = ImageIO.read(is);
                     room.setImage(image);
                     room.setRoomNumber(rs.getInt("room_number"));
                     room.setRoomType(room.setRoomTypeValue(rs.getString("room_type")));
@@ -176,60 +177,62 @@ public class RoomDAO implements DAO<Room, Integer> {
         return result;
     }
 
-    public List<Room> findByType(RoomType type) {
-        List<Room> rooms = new ArrayList<>();
-        try (PreparedStatement pst = conn.prepareStatement(FINDBYTYPE)) {
-            pst.setString(1, String.valueOf(type));
-            try (ResultSet rs = pst.executeQuery()) {
-                while (rs.next()) {
-                    Room room = new Room();
-                    room.setId(rs.getInt("id_room"));
-                    InputStream is = rs.getBinaryStream("image");
-                    Image image = ImageIO.read(is);
-                    room.setImage(image);
-                    room.setRoomNumber(rs.getInt("room_number"));
-                    room.setRoomType(RoomType.valueOf(rs.getString("room_type")));
-                    room.setNumberOfBeds(rs.getInt("number_beds"));
-                    room.setPriceNight(rs.getDouble("price_night"));
-                    room.setAvailable(rs.getBoolean("available"));
-                    rooms.add(room);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-        return rooms;
-    }
-
-    public List<Room> findByBeds(int beds) {
-        List<Room> rooms = new ArrayList<>();
-        try (PreparedStatement pst = conn.prepareStatement(FINDBYBEDS)) {
-            pst.setInt(1, beds);
-            try (ResultSet rs = pst.executeQuery()) {
-                while (rs.next()) {
-                    Room room = new Room();
-                    room.setId(rs.getInt("id_room"));
-                    InputStream is = rs.getBinaryStream("image");
-                    Image image = ImageIO.read(is);
-                    room.setImage(image);
-                    room.setRoomNumber(rs.getInt("room_number"));
-                    room.setRoomType(RoomType.valueOf(rs.getString("room_type")));
-                    room.setNumberOfBeds(rs.getInt("number_beds"));
-                    room.setPriceNight(rs.getDouble("price_night"));
-                    room.setAvailable(rs.getBoolean("available"));
-                    rooms.add(room);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return rooms;
-    }
+//    public List<Room> findByType(RoomType type) {
+//        List<Room> rooms = new ArrayList<>();
+//        try (PreparedStatement pst = conn.prepareStatement(FINDBYTYPE)) {
+//            pst.setString(1, String.valueOf(type));
+//            try (ResultSet rs = pst.executeQuery()) {
+//                while (rs.next()) {
+//                    Room room = new Room();
+//                    room.setId(rs.getInt("id_room"));
+//                    Blob blob = rs.getBlob("image");
+//                    InputStream is = blob.getBinaryStream();
+//                    BufferedImage image = ImageIO.read(is);
+//                    room.setImage(image);
+//                    room.setRoomNumber(rs.getInt("room_number"));
+//                    room.setRoomType(RoomType.valueOf(rs.getString("room_type")));
+//                    room.setNumberOfBeds(rs.getInt("number_beds"));
+//                    room.setPriceNight(rs.getDouble("price_night"));
+//                    room.setAvailable(rs.getBoolean("available"));
+//                    rooms.add(room);
+//                }
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//
+//        }
+//        return rooms;
+//    }
+//
+//    public List<Room> findByBeds(int beds) {
+//        List<Room> rooms = new ArrayList<>();
+//        try (PreparedStatement pst = conn.prepareStatement(FINDBYBEDS)) {
+//            pst.setInt(1, beds);
+//            try (ResultSet rs = pst.executeQuery()) {
+//                while (rs.next()) {
+//                    Room room = new Room();
+//                    room.setId(rs.getInt("id_room"));
+//                    Blob blob = rs.getBlob("image");
+//                    InputStream is = blob.getBinaryStream();
+//                    BufferedImage image = ImageIO.read(is);
+//                    room.setImage(image);
+//                    room.setRoomNumber(rs.getInt("room_number"));
+//                    room.setRoomType(RoomType.valueOf(rs.getString("room_type")));
+//                    room.setNumberOfBeds(rs.getInt("number_beds"));
+//                    room.setPriceNight(rs.getDouble("price_night"));
+//                    room.setAvailable(rs.getBoolean("available"));
+//                    rooms.add(room);
+//                }
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return rooms;
+//    }
 
     @Override
     public Room delete(Room entity) {
@@ -250,28 +253,17 @@ public class RoomDAO implements DAO<Room, Integer> {
 
     }
 
-    public InputStream imageToStream(Image image) {
+    public InputStream imageToStream(BufferedImage image) {
         ByteArrayInputStream bais = null;
         if (image != null) {
             try {
-                BufferedImage bi = toBufferedImage(image);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ImageIO.write(bi, "jpg", baos);
+                ImageIO.write(image, "png", baos);
                 bais = new ByteArrayInputStream(baos.toByteArray());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
         return bais;
-    }
-
-    public BufferedImage toBufferedImage(Image image) {
-        BufferedImage bimage = null;
-        if (image != null) {
-            bimage = new BufferedImage(image.getWidth(null),
-                    image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-            bimage.getGraphics().drawImage(image, 0, 0, null);
-        }
-        return bimage;
     }
 }
