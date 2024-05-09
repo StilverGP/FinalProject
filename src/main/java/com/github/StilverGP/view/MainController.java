@@ -9,14 +9,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.awt.*;
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,7 +30,7 @@ public class MainController extends Controller implements Initializable {
     private TableView<Room> tableView;
 
     @FXML
-    private TableColumn<Room, BufferedImage> imageColumn;
+    private TableColumn<Room, Image> imageColumn;
 
     @FXML
     private TableColumn<Room, Integer> numberColumn;
@@ -66,7 +69,23 @@ public class MainController extends Controller implements Initializable {
             priceColumn.setEditable(true);
             availabilityColumn.setEditable(true);
         }
-        imageColumn.setCellValueFactory(new PropertyValueFactory<>("image"));
+        imageColumn.setCellValueFactory(room -> new ImageView(convertToJavaFXImage(room.getValue().getImage())).imageProperty());
+        imageColumn.setCellFactory(column -> new TableCell<>() {
+            private final ImageView imageView = new ImageView();
+            @Override
+            protected void updateItem(Image image, boolean empty) {
+                super.updateItem(image, empty);
+                if (empty || image == null) {
+                    imageView.setImage(null);
+                    setGraphic(null);
+                } else {
+                    imageView.setImage(image);
+                    imageView.setFitHeight(85);
+                    imageView.setFitWidth(85);
+                    setGraphic(imageView);
+                }
+            }
+        });
         numberColumn.setCellValueFactory(room -> new SimpleIntegerProperty(room.getValue().getRoomNumber()).asObject());
         numberColumn.setOnEditCommit(event -> {
             if (event.getNewValue() == event.getOldValue()) return;
@@ -110,4 +129,20 @@ public class MainController extends Controller implements Initializable {
             }
         });
     }
+
+    public Image convertToJavaFXImage(BufferedImage roomImage) {
+        Image image = null;
+        if (roomImage != null) {
+            try {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(roomImage, "png", baos);
+                ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+                image = new Image(bais);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return image;
+    }
+  
 }
