@@ -14,16 +14,22 @@
                   <Menu mnemonicParsing="false" text="Modificar habitaciones">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#addRoom" text="Agregar habitacion" />
-                      <MenuItem mnemonicParsing="false" text="Eliminar habitacion" />
+                      <MenuItem mnemonicParsing="false" onAction="#removeRoom" text="Eliminar habitacion" />
                     </items>
                   </Menu>
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Cuenta">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Configuración de cuenta" />
+                  <Menu mnemonicParsing="false" text="Configuración de cuenta">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#updUserUsername" text="Actualizar username" />
+                        <MenuItem mnemonicParsing="false" onAction="#updUserName" text="Actualizar nombre" />
+                        <MenuItem mnemonicParsing="false" onAction="#updMail" text="Actualizar Mail" />
+                    </items>
+                  </Menu>
                   <MenuItem mnemonicParsing="false" text="Mis reservas" />
-                  <MenuItem mnemonicParsing="false" text="Cerrar Sesión" />
+                  <MenuItem mnemonicParsing="false" onAction="#logOff" text="Cerrar Sesión" />
                </items>
             </Menu>
       </menus>

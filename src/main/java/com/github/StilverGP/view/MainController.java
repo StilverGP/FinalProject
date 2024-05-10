@@ -80,8 +80,8 @@ public class MainController extends Controller implements Initializable {
                     setGraphic(null);
                 } else {
                     imageView.setImage(image);
-                    imageView.setFitHeight(85);
-                    imageView.setFitWidth(85);
+                    imageView.setFitHeight(100);
+                    imageView.setFitWidth(100);
                     setGraphic(imageView);
                 }
             }

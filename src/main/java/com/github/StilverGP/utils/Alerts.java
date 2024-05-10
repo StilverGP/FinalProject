@@ -17,4 +17,11 @@ public class Alerts {
         alert.setContentText(contentText);
         alert.show();
     }
+
+    public static Alert showConfirmationAlert(String header, String contentText) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(header);
+        alert.setContentText(contentText);
+        return alert;
+    }
 }

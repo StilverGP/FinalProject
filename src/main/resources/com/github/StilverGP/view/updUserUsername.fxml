@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.StilverGP.view.UserUsernameController">
+    <children>
+        <AnchorPane prefHeight="231.0" prefWidth="383.0">
+            <children>
+                <TextField fx:id="username" layoutX="117.0" layoutY="91.0" promptText="Username" />
+                <Label layoutX="121.0" layoutY="67.0" text="Inserte el nuevo username" />
+                <Button layoutX="157.0" layoutY="139.0" mnemonicParsing="false" onAction="#updateUser" text="Actualizar" />
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>
