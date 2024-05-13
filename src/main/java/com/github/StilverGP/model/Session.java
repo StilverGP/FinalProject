@@ -28,8 +28,4 @@ public class Session {
     public void logout() {
         loggedInUser = null;
     }
-
-    public boolean isAdmin() {
-        return loggedInUser.isAdmin();
-    }
 }

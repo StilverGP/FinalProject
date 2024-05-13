@@ -6,11 +6,13 @@ public enum Scenes {
     LOGIN("view/login.fxml"),
     FORMSIGNIN("view/formSignIn.fxml"),
     FORMROOM("view/formRoom.fxml"),
+    FORMDELETEROOM("view/formDelRoom.fxml"),
+    FORMBOOK("view/formBook.fxml"),
+    FORMDELETEBOOK("view/formDeleteBook.fxml"),
     UPDATEUSERUSERNAME("view/updUserUsername.fxml"),
     UPDATEUSERNAME("view/updUserName.fxml"),
     UPDATEUSERMAIL("view/updUserMail.fxml"),
-    FORMDELETEROOM("view/formDelRoom.fxml"),
-    FORMBOOK("view/formBook.fxml");
+    MYBOOKS("view/myBooks.fxml");
 
     private String url;
     Scenes(String url){

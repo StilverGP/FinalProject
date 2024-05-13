@@ -2,8 +2,10 @@ package com.github.StilverGP.view;
 
 import com.github.StilverGP.App;
 import com.github.StilverGP.model.Session;
+import com.github.StilverGP.model.dao.BookDAO;
 import com.github.StilverGP.model.dao.RoomDAO;
 import com.github.StilverGP.model.dao.UserDAO;
+import com.github.StilverGP.model.entity.Book;
 import com.github.StilverGP.model.entity.Room;
 import com.github.StilverGP.model.entity.User;
 import javafx.fxml.FXML;
@@ -31,7 +33,7 @@ public class AppController extends Controller implements Initializable {
 
     @Override
     public void onOpen(Object input) throws IOException {
-        changeScene(Scenes.MAIN, null);
+        changeScene(Scenes.LOGIN, null);
     }
 
     public void changeScene(Scenes scene, Object data) throws IOException {
@@ -39,7 +41,7 @@ public class AppController extends Controller implements Initializable {
         borderPane.setCenter(view.scene);
         this.centerController = view.controller;
         this.centerController.onOpen(data);
-        if (LoginController.checkUserIsAdmin()) userIsAdmin();
+        if (LoginController.checkUserIsAdmin()) admin.setVisible(true);
     }
 
     public void openModal(Scenes scene, String title, Controller parent, Object data) throws IOException {
@@ -61,6 +63,10 @@ public class AppController extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    public void myBooks() throws IOException {
+        App.currentController.openModal(Scenes.MYBOOKS, "Mis reservas", this, null);
     }
 
     public void addRoom() throws IOException {
@@ -106,10 +112,6 @@ public class AppController extends Controller implements Initializable {
     public void updateUserMail(User user) {
         UserDAO userDAO = new UserDAO();
         userDAO.updateMail(user);
-    }
-
-    public void userIsAdmin() {
-        admin.setVisible(true);
     }
 
     public void logOff() throws IOException {

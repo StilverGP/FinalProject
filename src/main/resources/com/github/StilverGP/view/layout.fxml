@@ -5,11 +5,11 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="borderPane" minHeight="300.0" minWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.StilverGP.view.AppController">
+<BorderPane fx:id="borderPane" minHeight="300.0" minWidth="400.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.github.StilverGP.view.AppController">
    <top>
     <MenuBar nodeOrientation="RIGHT_TO_LEFT" BorderPane.alignment="CENTER">
       <menus>
-            <Menu fx:id="admin" mnemonicParsing="false" text="Admin">
+            <Menu fx:id="admin" mnemonicParsing="false" text="Admin" visible="false">
               <items>
                   <Menu mnemonicParsing="false" text="Modificar habitaciones">
                     <items>
@@ -28,7 +28,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#updMail" text="Actualizar Mail" />
                     </items>
                   </Menu>
-                  <MenuItem mnemonicParsing="false" text="Mis reservas" />
+                  <MenuItem mnemonicParsing="false" onAction="#myBooks" text="Mis reservas" />
                   <MenuItem mnemonicParsing="false" onAction="#logOff" text="Cerrar Sesión" />
                </items>
             </Menu>
