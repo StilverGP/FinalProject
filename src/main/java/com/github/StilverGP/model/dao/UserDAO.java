@@ -10,11 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAO implements DAO<User, String> {
-    private static final String INSERT = "INSERT into User(dni, name, username, password, mail, phone) VALUES (?,?,?,?,?,?)";
+    private static final String INSERT = "INSERT into User(dni, name, username, password, mail, phone, isAdmin) VALUES (?,?,?,?,?,?,?)";
     private static final String UPDATEUSERNAME = "UPDATE User SET username=? where id_user=?";
     private static final String UPDATENAME = "UPDATE User SET name=? where id_user=?";
     private static final String UPDATEMAIL = "UPDATE User SET mail=? where id_user=?";
-    private static final String FINDBYID = "SELECT id_user, dni, name, username, password, mail, phone FROM User WHERE username = ?";
+    private static final String FINDBYID = "SELECT id_user, dni, name, username, password, mail, phone, isAdmin FROM User WHERE username = ?";
     private static final String DELETE = "DELETE FROM User WHERE id_user=?";
 
     private Connection conn;
@@ -38,6 +38,7 @@ public class UserDAO implements DAO<User, String> {
                         pst.setString(4, entity.getPassword());
                         pst.setString(5, entity.getMail());
                         pst.setString(6, entity.getPhone());
+                        pst.setBoolean(7, entity.isAdmin());
                         pst.executeUpdate();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -124,7 +125,7 @@ public class UserDAO implements DAO<User, String> {
                     user.setPassword(rs.getString("password"));
                     user.setMail(rs.getString("mail"));
                     user.setPhone(rs.getString("phone"));
-                    if (user.getUsername().equals("admin")) user.setAdmin(true);
+                    user.setAdmin(rs.getBoolean("isAdmin"));
                     result = user;
                 }
             }

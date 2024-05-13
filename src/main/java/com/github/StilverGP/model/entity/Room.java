@@ -90,17 +90,17 @@ public class Room {
 
     public String getRoomTypeValue(RoomType type) {
         String typeValue = "";
-        if (type == RoomType.STANDARD) typeValue = "standard";
-        if (type == RoomType.SUITE) typeValue = "suite";
-        if (type == RoomType.FAMILY) typeValue = "family";
-        if (type == RoomType.DELUXE) typeValue = "deluxe";
+        if (type == RoomType.STANDARD) typeValue = "Estándar";
+        if (type == RoomType.SUITE) typeValue = "Suite";
+        if (type == RoomType.FAMILY) typeValue = "Familiar";
+        if (type == RoomType.DELUXE) typeValue = "De lujo";
         return typeValue;
     }
 
     public String getAvailabilityValue(Boolean available) {
         String abailavilityValue = "";
-        if (available) abailavilityValue = "disponible";
-        if (!available) abailavilityValue = "ocupada";
+        if (available) abailavilityValue = "Disponible";
+        if (!available) abailavilityValue = "Ocupada";
         return abailavilityValue;
     }
 
