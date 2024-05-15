@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,7 +30,7 @@ public class FormRoomController extends Controller implements Initializable {
     private TextField roomNumber;
 
     @FXML
-    private TextField roomType;
+    private ChoiceBox<String> roomType;
 
     @FXML
     private TextField roomBeds;
@@ -42,12 +43,14 @@ public class FormRoomController extends Controller implements Initializable {
 
     private BufferedImage roomImage;
 
-    private AppController controller;
+    private MainController controller;
+
+    private String[] roomTypes = {"Estandar", "Familiar", "Suite", "Deluxe"};
 
     @Override
     public void onOpen(Object input) {
         this.roomImage = null;
-        this.controller = (AppController) input;
+        this.controller = (MainController) input;
     }
 
     public void addRoom(Event event) {
@@ -57,7 +60,7 @@ public class FormRoomController extends Controller implements Initializable {
             Room room = new Room();
             room.setImage(roomImage);
             room.setRoomNumber(Integer.valueOf(roomNumber.getText()));
-            room.setRoomType(room.setRoomTypeValue(roomType.getText()));
+            room.setRoomType(room.setRoomTypeValue(roomType.getValue()));
             room.setNumberOfBeds(Integer.valueOf(roomBeds.getText()));
             room.setPriceNight(Double.parseDouble(roomPrice.getText()));
             room.setAvailable(roomAvailable.isSelected());
@@ -68,7 +71,7 @@ public class FormRoomController extends Controller implements Initializable {
     }
 
     public void getImage(Event event) throws IOException {
-        Window window = ((Node)(event.getSource())).getScene().getWindow();
+        Window window = ((Node) (event.getSource())).getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecciona una imagen...");
         FileChooser.ExtensionFilter extFilter =
@@ -84,8 +87,9 @@ public class FormRoomController extends Controller implements Initializable {
 
     public void saveAndCloseWindow(Room room, Event event) {
         this.controller.saveRoom(room);
-        ((Node)(event.getSource())).getScene().getWindow().hide();
+        ((Node) (event.getSource())).getScene().getWindow().hide();
     }
+
     @Override
     public void onClose(Object output) {
 
@@ -93,6 +97,6 @@ public class FormRoomController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        roomType.getItems().addAll(roomTypes);
     }
 }

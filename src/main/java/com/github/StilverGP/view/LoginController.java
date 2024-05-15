@@ -53,7 +53,7 @@ public class LoginController extends Controller implements Initializable {
     }
 
     public void signIn() throws IOException {
-        App.currentController.openModal(Scenes.FORMSIGNIN, "Agregando usuario...",this, null);
+        App.currentController.openModal(Scenes.FORMSIGNIN, "Agregando usuario...", this, null);
     }
 
     public void saveUser(User user) {

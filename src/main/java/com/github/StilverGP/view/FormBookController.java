@@ -1,6 +1,7 @@
 package com.github.StilverGP.view;
 
 import com.github.StilverGP.model.Session;
+import com.github.StilverGP.model.dao.BookDAO;
 import com.github.StilverGP.model.dao.RoomDAO;
 import com.github.StilverGP.model.entity.Book;
 import com.github.StilverGP.model.entity.Room;
@@ -14,6 +15,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -29,6 +31,7 @@ public class FormBookController extends Controller implements Initializable {
     private TextField roomNumber;
 
     private MainController controller;
+
     @Override
     public void onOpen(Object input) throws IOException {
         this.controller = (MainController) input;
@@ -38,11 +41,12 @@ public class FormBookController extends Controller implements Initializable {
         RoomDAO roomDAO = new RoomDAO();
         Room room = roomDAO.findById(Integer.valueOf(roomNumber.getText()));
         if (room != null) {
+            BookDAO bookDAO = new BookDAO();
             if (room.isAvailable()) {
                 if (checkOutDate.getValue().isAfter(checkInDate.getValue())) {
                     Book book = new Book(generateBookCode(), checkInDate.getValue(), checkOutDate.getValue(), Session.getInstance().getLoggedInUser(), room);
                     this.controller.saveBook(book);
-                    ((Node)(event.getSource())).getScene().getWindow().hide();
+                    ((Node) (event.getSource())).getScene().getWindow().hide();
                 } else {
                     Alerts.showErrorAlert("Error al crear la reserva", "La fecha de salida no puede ser anterior a la fecha de entrada");
                 }
@@ -55,10 +59,11 @@ public class FormBookController extends Controller implements Initializable {
     }
 
     public String generateBookCode() {
+        int cod_bookLength = 5;
         String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < cod_bookLength; i++) {
             sb.append(characters.charAt(random.nextInt(characters.length())));
         }
         return sb.toString();

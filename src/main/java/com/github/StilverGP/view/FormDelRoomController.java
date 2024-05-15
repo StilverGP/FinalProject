@@ -17,24 +17,24 @@ public class FormDelRoomController extends Controller implements Initializable {
     @FXML
     private TextField roomNumber;
 
-    private AppController controller;
+    private MainController controller;
 
 
     @Override
     public void onOpen(Object input) {
-        this.controller = (AppController) input;
+        this.controller = (MainController) input;
     }
 
     public void deleteRoom(Event event) {
         RoomDAO roomDAO = new RoomDAO();
         Room roomExists = roomDAO.findById(Integer.valueOf(roomNumber.getText()));
-        if ( roomExists != null) {
+        if (roomExists != null) {
             Alerts.showConfirmationAlert("Eliminación de habitación",
                     "Esta a punto de borrar esta habitación, " +
                             "¿Está totalmente seguro de esta acción?").showAndWait().ifPresent(response -> {
-                    if (response == ButtonType.OK) {
-                        deleteAndCloseWindow(roomExists, event);
-                    }
+                if (response == ButtonType.OK) {
+                    deleteAndCloseWindow(roomExists, event);
+                }
             });
         } else {
             Alerts.showErrorAlert("Error al borrar la habitación", "No existe ninguna habitación con ese numero");
@@ -53,6 +53,6 @@ public class FormDelRoomController extends Controller implements Initializable {
 
     public void deleteAndCloseWindow(Room room, Event event) {
         this.controller.deleteRoom(room);
-        ((Node)(event.getSource())).getScene().getWindow().hide();
+        ((Node) (event.getSource())).getScene().getWindow().hide();
     }
 }

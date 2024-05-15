@@ -1,0 +1,11 @@
+
+i
+java:S5411f"(Use a primitive boolean expression here.(³ïßƒúÿÿÿÿJ$9921d442-239c-49a5-b35c-349bf12d38f2
+d
+java:S5411g"(Use a primitive boolean expression here.(öıò‰J$b7b51235-d5ca-4b65-85c8-bd179df06220
+š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(•şÍØùÿÿÿÿJ$394db817-3fe3-45e0-ac78-da7119705826
+¨
+java:S4165m"gRemove this useless assignment; "available" already holds the assigned value along all execution paths.(Ğ¸‹ÙÿÿÿÿÿJ$088d8473-caf2-4e47-a82d-2bd38d12667e
+‰	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®ë–ûJ$bf8dae7d-0638-4e99-bb44-01a2d1092769
+y
+java:S1117l"=Rename "available" which hides the field declared at line 13.(ÙÙ¢J$9e223f2e-8de3-41bd-9485-8d2a0a317d4f

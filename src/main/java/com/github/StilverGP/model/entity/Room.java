@@ -81,19 +81,19 @@ public class Room {
 
     public RoomType setRoomTypeValue(String value) {
         RoomType type = null;
-        if (value.toLowerCase().matches("standard")) type = RoomType.STANDARD;
-        if (value.toLowerCase().matches("suite")) type = RoomType.SUITE;
-        if (value.toLowerCase().matches("family")) type = RoomType.FAMILY;
-        if (value.toLowerCase().matches("deluxe")) type = RoomType.DELUXE;
+        if (value.matches("Estandar")) type = RoomType.STANDARD;
+        if (value.matches("Suite")) type = RoomType.SUITE;
+        if (value.matches("Familiar")) type = RoomType.FAMILY;
+        if (value.matches("Deluxe")) type = RoomType.DELUXE;
         return type;
     }
 
     public String getRoomTypeValue(RoomType type) {
         String typeValue = "";
-        if (type == RoomType.STANDARD) typeValue = "Estándar";
+        if (type == RoomType.STANDARD) typeValue = "Estandar";
         if (type == RoomType.SUITE) typeValue = "Suite";
         if (type == RoomType.FAMILY) typeValue = "Familiar";
-        if (type == RoomType.DELUXE) typeValue = "De lujo";
+        if (type == RoomType.DELUXE) typeValue = "Deluxe";
         return typeValue;
     }
 

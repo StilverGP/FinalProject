@@ -5,9 +5,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="515.0" prefWidth="604.0" spacing="20.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.github.StilverGP.view.MainController">
+<VBox alignment="CENTER" prefHeight="515.0" prefWidth="604.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.StilverGP.view.MainController">
     <children>
         <Label text="Habitaciones" />
         <TableView fx:id="tableView">
@@ -23,7 +24,13 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-      <Button mnemonicParsing="false" onAction="#addBook" text="Realizar reserva" />
+      <Button mnemonicParsing="false" onAction="#addBook" prefWidth="99.0" text="Realizar reserva" />
+      <HBox fx:id="adminHBox" alignment="CENTER" disable="true" prefHeight="20.0" prefWidth="564.0" visible="false">
+         <children>
+            <Button fx:id="addRoom" mnemonicParsing="false" onAction="#addRoom" text="Añadir habitación" />
+            <Button fx:id="deleteRoom" mnemonicParsing="false" onAction="#removeRoom" text="Eliminar habitación" />
+         </children>
+      </HBox>
     </children>
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
