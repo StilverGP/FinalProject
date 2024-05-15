@@ -12,18 +12,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.util.converter.BooleanStringConverter;
+import javafx.scene.layout.HBox;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 import javax.imageio.ImageIO;
-import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -55,24 +55,59 @@ public class MainController extends Controller implements Initializable {
     @FXML
     private TableColumn<Room, String> availabilityColumn;
 
+    @FXML
+    private Button addRoom;
+
+    @FXML
+    private Button deleteRoom;
+
+    @FXML
+    private HBox adminHBox;
+
     private ObservableList<Room> rooms;
 
     @Override
     public void onOpen(Object input) {
+        if (LoginController.checkUserIsAdmin()) {
+            addRoom.setDisable(false);
+            addRoom.setVisible(true);
+            deleteRoom.setDisable(false);
+            deleteRoom.setVisible(true);
+            adminHBox.setDisable(false);
+            adminHBox.setVisible(true);
+        }
+        reloadRoomsFromDataBase();
+    }
+
+    public void addRoom() throws IOException {
+        App.currentController.openModal(Scenes.FORMROOM, "Agregando habitación...", this, null);
+    }
+
+    public void removeRoom() throws IOException {
+        App.currentController.openModal(Scenes.FORMDELETEROOM, "Eliminando habitación...", this, null);
+    }
+
+    public void saveRoom(Room room) {
+        RoomDAO roomDAO = new RoomDAO();
+        roomDAO.add(room);
+        reloadRoomsFromDataBase();
+    }
+
+    public void deleteRoom(Room room) {
+        RoomDAO roomDAO = new RoomDAO();
+        roomDAO.delete(room);
+        reloadRoomsFromDataBase();
+    }
+
+    public void reloadRoomsFromDataBase() {
         RoomDAO rDAO = new RoomDAO();
         List<Room> rooms = rDAO.findAll();
         this.rooms = FXCollections.observableArrayList(rooms);
         tableView.setItems(this.rooms);
     }
 
-    public void reloadRoomsFromDataBase() {
-        RoomDAO rDAO = new RoomDAO();
-        List<Room> rooms = rDAO.findAll();
-        this.rooms.setAll(rooms);
-    }
-
     public void addBook() throws IOException {
-        App.currentController.openModal(Scenes.FORMBOOK,"Agregando reserva..." ,this ,null);
+        App.currentController.openModal(Scenes.FORMBOOK, "Agregando reserva...", this, null);
     }
 
     public void saveBook(Book book) {
@@ -104,13 +139,11 @@ public class MainController extends Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (Session.getInstance().getLoggedInUser().isAdmin()) {
             tableView.setEditable(true);
-            numberColumn.setEditable(true);
-            priceColumn.setEditable(true);
-            availabilityColumn.setEditable(true);
         }
         imageColumn.setCellValueFactory(room -> new ImageView(convertToJavaFXImage(room.getValue().getImage())).imageProperty());
         imageColumn.setCellFactory(column -> new TableCell<>() {
             private final ImageView imageView = new ImageView();
+
             @Override
             protected void updateItem(Image image, boolean empty) {
                 super.updateItem(image, empty);
@@ -120,7 +153,7 @@ public class MainController extends Controller implements Initializable {
                 } else {
                     imageView.setImage(image);
                     imageView.setFitHeight(100);
-                    imageView.setFitWidth(100);
+                    imageView.setFitWidth(150);
                     setGraphic(imageView);
                 }
             }

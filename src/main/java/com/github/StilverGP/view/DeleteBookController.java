@@ -4,6 +4,7 @@ import com.github.StilverGP.model.Session;
 import com.github.StilverGP.model.dao.BookDAO;
 import com.github.StilverGP.model.entity.Book;
 import com.github.StilverGP.utils.Alerts;
+import com.github.StilverGP.utils.Security;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,27 +27,21 @@ public class DeleteBookController extends Controller implements Initializable {
     private PasswordField password;
 
     private MyBooksController controller;
+
     @Override
     public void onOpen(Object input) throws IOException {
         this.controller = (MyBooksController) input;
     }
 
     public void deleteBook(Event event) {
-        if (Session.getInstance().getLoggedInUser().isMyPassword(password.getText())) {
+        if (Session.getInstance().getLoggedInUser().isMyPassword(Security.hashPassword(password.getText()))) {
             BookDAO bookDAO = new BookDAO();
             Book book = bookDAO.findById(codBook.getText());
-            List<Book> UserBooks = bookDAO.findByUser(Session.getInstance().getLoggedInUser());
-            for (Book userBook : UserBooks) {
-                if (userBook == book){
-                    Alerts.showConfirmationAlert("Cancelación de reserva",
-                            "Esta a punto de cancelar la reserva, " +
-                                    "¿Está totalmente seguro de esta acción?").showAndWait().ifPresent(response -> {
-                        if (response == ButtonType.OK) deleteAndCloseWindow(book, event);
-                    });
-                } else {
-                    Alerts.showErrorAlert("Error de cancelación de reserva","No tienes ninguna reserva que contenga este código");
-                }
-            }
+            Alerts.showConfirmationAlert("Cancelación de reserva",
+                    "Esta a punto de cancelar la reserva, " +
+                            "¿Está totalmente seguro de esta acción?").showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) deleteAndCloseWindow(book, event);
+            });
         } else {
             Alerts.showErrorAlert("Error de cancelación de reserva", "Contraseña incorrecta");
         }
@@ -54,7 +49,7 @@ public class DeleteBookController extends Controller implements Initializable {
 
     public void deleteAndCloseWindow(Book book, Event event) {
         this.controller.deleteBook(book);
-        ((Node)(event.getSource())).getScene().getWindow().hide();
+        ((Node) (event.getSource())).getScene().getWindow().hide();
     }
 
     @Override

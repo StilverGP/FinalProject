@@ -7,7 +7,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -63,7 +62,7 @@ public class FormSignInController extends Controller implements Initializable {
                 User user = new User(dni.getText(), name.getText(), username.getText(),
                         password.getText(), email.getText(), phone.getText());
                 this.controller.saveUser(user);
-                ((Node)(event.getSource())).getScene().getWindow().hide();
+                ((Node) (event.getSource())).getScene().getWindow().hide();
             } else {
                 Alerts.showErrorAlert("Error al crear el usuario", "Contraseñas no coinciden");
             }

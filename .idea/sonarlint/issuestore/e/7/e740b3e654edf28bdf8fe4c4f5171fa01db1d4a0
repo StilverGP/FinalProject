@@ -1,0 +1,12 @@
+
+œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(“ƒ•¯8şõ´°÷1J$46432611-3bc5-48d6-8be9-2bb2cae76c4b
+
+java:S3973<"GUse indentation to denote the code conditionally executed by this "if".(¨¡ßäıÿÿÿÿ8€ö´°÷1J$59574737-c431-41ec-afb6-4d67a338e1bf
+Ï
+java:S2681>"†This line will not be executed conditionally; only the first line of this 2-line block will be. The rest will execute unconditionally.(šÁÜáıÿÿÿÿ8ö´°÷1J$887b6361-8941-42f1-9994-d7d4f7579baa
+ˆ
+java:S20956"EUse try-with-resources or close this "RoomDAO" in a "finally" clause.(¥ıî8”¾µ°÷1J$1ce0e5fd-d785-4199-8cff-5b5727920323
+É
+java:S1186["€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¯®Òêúÿÿÿÿ8ö´°÷1J$d87f7223-12cf-427d-85c0-8a932fb9082f
+É
+java:S1186`"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(•‘İŸüÿÿÿÿ8ö´°÷1J$6c57e9d9-3f16-4fcf-98f3-7b3a564eb01c

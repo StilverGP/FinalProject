@@ -4,6 +4,7 @@ import com.github.StilverGP.model.Session;
 import com.github.StilverGP.model.dao.UserDAO;
 import com.github.StilverGP.model.entity.User;
 import com.github.StilverGP.utils.Alerts;
+import com.github.StilverGP.utils.Security;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,7 +15,6 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class UserUsernameController extends Controller implements Initializable {
@@ -37,8 +37,8 @@ public class UserUsernameController extends Controller implements Initializable 
         Alerts.showConfirmationAlert("Actualización de username",
                 "Esta a punto de actualizar su username, " +
                         "¿Está totalmente seguro de esta acción?").showAndWait().ifPresent(response -> {
-            if (!Objects.equals(Session.getInstance().getLoggedInUser().getUsername(), username.getText())) {
-                if (Session.getInstance().getLoggedInUser().isMyPassword(password.getText())) {
+            if (!Session.getInstance().getLoggedInUser().getUsername().equals(username.getText())) {
+                if (Session.getInstance().getLoggedInUser().isMyPassword(Security.hashPassword(password.getText()))) {
                     if (response == ButtonType.OK) {
                         user.setUsername(username.getText());
                         saveAndCloseWindow(user, event);
