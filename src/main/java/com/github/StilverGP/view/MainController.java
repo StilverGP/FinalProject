@@ -101,18 +101,26 @@ public class MainController extends Controller implements Initializable {
 
     public void reloadRoomsFromDataBase() {
         RoomDAO rDAO = new RoomDAO();
-        List<Room> rooms = rDAO.findAll();
+        List<Room> rooms;
+        if (Session.getInstance().getLoggedInUser().isAdmin()) {
+            rooms = rDAO.findAll();
+        } else {
+            rooms = rDAO.findAllAvailable();
+        }
         this.rooms = FXCollections.observableArrayList(rooms);
         tableView.setItems(this.rooms);
     }
 
     public void addBook() throws IOException {
         App.currentController.openModal(Scenes.FORMBOOK, "Agregando reserva...", this, null);
+        reloadRoomsFromDataBase();
     }
+
 
     public void saveBook(Book book) {
         BookDAO bookDAO = new BookDAO();
         bookDAO.add(book);
+        reloadRoomsFromDataBase();
     }
 
     public Image convertToJavaFXImage(BufferedImage roomImage) {

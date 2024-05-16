@@ -1,0 +1,16 @@
+
+R
+java:S4973L"<Strings and Boxed types should be compared using "equals()".(ş‰Èı
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(“ƒ•¯
+`
+java:S20952"EUse try-with-resources or close this "BookDAO" in a "finally" clause.(¦„ó¡úÿÿÿÿ
+`
+java:S2095="EUse try-with-resources or close this "BookDAO" in a "finally" clause.(¦„ó¡úÿÿÿÿ
+œ
+java:S1186C"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¯®Òêúÿÿÿÿ
+j
+java:S1450*"TRemove the "books" field and declare it as a local variable in the relevant methods.(÷¥ûÇ
+T
+java:S11173"9Rename "books" which hides the field declared at line 42.(™ëºÊúÿÿÿÿ
+m
+java:S3776H"RRefactor this method to reduce its Cognitive Complexity from 26 to the 15 allowed.(•‘İŸüÿÿÿÿ

@@ -9,7 +9,7 @@
    <top>
     <MenuBar nodeOrientation="RIGHT_TO_LEFT" BorderPane.alignment="CENTER">
       <menus>
-            <Menu mnemonicParsing="false" text="Cuenta">
+            <Menu fx:id="account" mnemonicParsing="false" text="Cuenta" visible="false">
                <items>
                   <Menu mnemonicParsing="false" text="Configuración de cuenta">
                     <items>

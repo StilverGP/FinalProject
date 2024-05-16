@@ -42,7 +42,7 @@ public class MyBooksController extends Controller implements Initializable {
     private ObservableList<Book> books;
 
     @Override
-    public void onOpen(Object input) throws IOException {
+    public void onOpen(Object input) {
         reloadBooksFromDatabase();
     }
 
