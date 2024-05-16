@@ -19,6 +19,7 @@ public class RoomDAO implements DAO<Room, Integer> {
     private static final String UPDATEPRICE = "UPDATE Room SET price_night=? WHERE room_number=?";
     private static final String UPDATEAVAILABILITY = "UPDATE Room SET available=? WHERE room_number=?";
     private static final String FINDALL = "SELECT id_room, image, room_number, room_type, number_beds, price_night, available FROM Room";
+    private static final String FINDALLAVAILABLE = "SELECT id_room, image, room_number, room_type, number_beds, price_night, available FROM Room WHERE available=true";
     private static final String FINDBYID = "SELECT id_room, image, room_number, room_type, number_beds, price_night, available FROM Room WHERE room_number=?";
     private static final String DELETE = "DELETE FROM Room WHERE room_number=?";
 
@@ -119,6 +120,34 @@ public class RoomDAO implements DAO<Room, Integer> {
     public List<Room> findAll() {
         List<Room> rooms = new ArrayList<>();
         try (PreparedStatement pst = conn.prepareStatement(FINDALL)){
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Room room = new Room();
+                    room.setId(rs.getInt("id_room"));
+                    InputStream is = rs.getBinaryStream("image");
+                    if (is != null) {
+                        BufferedImage image = ImageIO.read(is);
+                        room.setImage(image);
+                    }
+                    room.setRoomNumber(rs.getInt("room_number"));
+                    room.setRoomType(room.setRoomTypeValue(rs.getString("room_type")));
+                    room.setNumberOfBeds(rs.getInt("number_beds"));
+                    room.setPriceNight(rs.getDouble("price_night"));
+                    room.setAvailable(rs.getBoolean("available"));
+                    rooms.add(room);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+        return rooms;
+    }
+
+    public List<Room> findAllAvailable() {
+        List<Room> rooms = new ArrayList<>();
+        try (PreparedStatement pst = conn.prepareStatement(FINDALLAVAILABLE)){
             try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
                     Room room = new Room();

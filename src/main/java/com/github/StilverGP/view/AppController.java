@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -18,6 +19,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AppController extends Controller implements Initializable {
+
+    @FXML
+    private Menu account;
 
     @FXML
     private BorderPane borderPane;
@@ -30,6 +34,7 @@ public class AppController extends Controller implements Initializable {
     }
 
     public void changeScene(Scenes scene, Object data) throws IOException {
+        if (Session.getInstance().isLoggedIn()) account.setVisible(true);
         View view = loadFXML(scene);
         borderPane.setCenter(view.scene);
         this.centerController = view.controller;

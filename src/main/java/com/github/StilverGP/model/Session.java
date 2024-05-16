@@ -7,7 +7,7 @@ public class Session {
     private User loggedInUser;
 
     public Session() {
-        loggedInUser = new User();
+        loggedInUser = null;
     }
 
     public static Session getInstance() {
@@ -27,5 +27,9 @@ public class Session {
 
     public void logout() {
         loggedInUser = null;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedInUser != null;
     }
 }

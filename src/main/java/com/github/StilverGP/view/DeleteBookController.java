@@ -2,7 +2,9 @@ package com.github.StilverGP.view;
 
 import com.github.StilverGP.model.Session;
 import com.github.StilverGP.model.dao.BookDAO;
+import com.github.StilverGP.model.dao.RoomDAO;
 import com.github.StilverGP.model.entity.Book;
+import com.github.StilverGP.model.entity.Room;
 import com.github.StilverGP.utils.Alerts;
 import com.github.StilverGP.utils.Security;
 import javafx.event.Event;
@@ -37,6 +39,10 @@ public class DeleteBookController extends Controller implements Initializable {
         if (Session.getInstance().getLoggedInUser().isMyPassword(Security.hashPassword(password.getText()))) {
             BookDAO bookDAO = new BookDAO();
             Book book = bookDAO.findById(codBook.getText());
+            RoomDAO roomDAO = new RoomDAO();
+            Room room = book.getRoom();
+            room.setAvailable(true);
+            roomDAO.updateAvailability(room);
             Alerts.showConfirmationAlert("Cancelación de reserva",
                     "Esta a punto de cancelar la reserva, " +
                             "¿Está totalmente seguro de esta acción?").showAndWait().ifPresent(response -> {

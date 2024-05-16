@@ -41,10 +41,11 @@ public class FormBookController extends Controller implements Initializable {
         RoomDAO roomDAO = new RoomDAO();
         Room room = roomDAO.findById(Integer.valueOf(roomNumber.getText()));
         if (room != null) {
-            BookDAO bookDAO = new BookDAO();
             if (room.isAvailable()) {
                 if (checkOutDate.getValue().isAfter(checkInDate.getValue())) {
                     Book book = new Book(generateBookCode(), checkInDate.getValue(), checkOutDate.getValue(), Session.getInstance().getLoggedInUser(), room);
+                    room.setAvailable(false);
+                    roomDAO.updateAvailability(room);
                     this.controller.saveBook(book);
                     ((Node) (event.getSource())).getScene().getWindow().hide();
                 } else {
