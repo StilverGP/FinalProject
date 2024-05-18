@@ -2,6 +2,7 @@ package com.github.StilverGP.view;
 
 import com.github.StilverGP.App;
 import com.github.StilverGP.model.Session;
+import com.github.StilverGP.model.connection.InitializeDatabase;
 import com.github.StilverGP.model.dao.UserDAO;
 import com.github.StilverGP.model.entity.User;
 import javafx.fxml.FXML;
@@ -30,6 +31,8 @@ public class AppController extends Controller implements Initializable {
 
     @Override
     public void onOpen(Object input) throws IOException {
+        InitializeDatabase initializeDatabase = new InitializeDatabase();
+        initializeDatabase.initialize();
         changeScene(Scenes.LOGIN, null);
     }
 

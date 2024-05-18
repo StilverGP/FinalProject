@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController extends Controller implements Initializable {
-
     @FXML
     private TableView<Room> tableView;
 
@@ -65,6 +64,8 @@ public class MainController extends Controller implements Initializable {
     private HBox adminHBox;
 
     private ObservableList<Room> rooms;
+
+    private boolean isBookAdded = false;
 
     @Override
     public void onOpen(Object input) {
@@ -113,13 +114,16 @@ public class MainController extends Controller implements Initializable {
 
     public void addBook() throws IOException {
         App.currentController.openModal(Scenes.FORMBOOK, "Agregando reserva...", this, null);
-        reloadRoomsFromDataBase();
+        if (isBookAdded) {
+            reloadRoomsFromDataBase();
+            isBookAdded = false;
+        }
     }
-
 
     public void saveBook(Book book) {
         BookDAO bookDAO = new BookDAO();
         bookDAO.add(book);
+        isBookAdded = true;
         reloadRoomsFromDataBase();
     }
 

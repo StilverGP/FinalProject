@@ -1,7 +1,9 @@
 package com.github.StilverGP.model.connection;
 
+import com.github.StilverGP.App;
 import com.github.StilverGP.utils.XMLManager;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,7 +14,8 @@ public class ConnectionMariaDB {
     private static Connection conn;
 
     private ConnectionMariaDB() {
-        ConnectionProperties properties = (ConnectionProperties) XMLManager.readXML(new ConnectionProperties(), FILE);
+        InputStream inputStream = App.class.getResourceAsStream(FILE);
+        ConnectionProperties properties = (ConnectionProperties) XMLManager.readXML(new ConnectionProperties(), inputStream);
         String url = properties.getURL();
         try {
             conn = DriverManager.getConnection(url, properties.getUser(), properties.getPassword());
