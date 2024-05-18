@@ -5,6 +5,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.io.InputStream;
 
 public class XMLManager {
     public static <T> boolean writeXML(T c,String filename){
@@ -23,14 +24,14 @@ public class XMLManager {
         return result;
     }
 
-    public static<T> T readXML(T c,String filename){
+    public static<T> T readXML(T c, InputStream filename){
         T result = c;
         JAXBContext context;
 
         try{
             context = JAXBContext.newInstance(c.getClass());
             Unmarshaller um = context.createUnmarshaller();
-            result = (T) um.unmarshal(new File(filename));
+            result = (T) um.unmarshal(filename);
         }catch (JAXBException e){
             e.printStackTrace();
         }
