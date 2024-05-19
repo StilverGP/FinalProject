@@ -8,22 +8,14 @@ import java.io.File;
 import java.io.InputStream;
 
 public class XMLManager {
-    public static <T> boolean writeXML(T c,String filename){
-        boolean result=false;
-        JAXBContext context;
-        try{
-            context = JAXBContext.newInstance(c.getClass());
-            Marshaller m = context.createMarshaller();
-            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,true);
-            m.setProperty(Marshaller.JAXB_ENCODING,"UTF-8");
-            m.marshal(c,new File(filename));
-            result=true;
-        }catch (JAXBException e){
-            e.printStackTrace();
-        }
-        return result;
-    }
-
+    /**
+     * Reads an XML file and unmarshals it into an object of the specified class type.
+     *
+     * @param c         the class type of the object to be created.
+     * @param filename  the InputStream of the XML file to be read.
+     * @param <T>       the type of the object to be created.
+     * @return an object of the specified class type containing the data from the XML file.
+     */
     public static<T> T readXML(T c, InputStream filename){
         T result = c;
         JAXBContext context;

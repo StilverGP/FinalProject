@@ -1,4 +1,4 @@
-package com.github.StilverGP.view;
+package com.github.StilverGP.controller;
 
 import com.github.StilverGP.model.dao.RoomDAO;
 import com.github.StilverGP.model.entity.Room;
@@ -25,6 +25,11 @@ public class FormDelRoomController extends Controller implements Initializable {
         this.controller = (MainController) input;
     }
 
+    /**
+     * Deletes a room if it exists and the action is confirmed by the user.
+     *
+     * @param event the event that triggered the method.
+     */
     public void deleteRoom(Event event) {
         RoomDAO roomDAO = new RoomDAO();
         Room roomExists = roomDAO.findById(Integer.valueOf(roomNumber.getText()));
@@ -51,6 +56,12 @@ public class FormDelRoomController extends Controller implements Initializable {
 
     }
 
+    /**
+     * Deletes the room and closes the window.
+     *
+     * @param room the room to be deleted.
+     * @param event the event that triggered the deletion.
+     */
     public void deleteAndCloseWindow(Room room, Event event) {
         this.controller.deleteRoom(room);
         ((Node) (event.getSource())).getScene().getWindow().hide();

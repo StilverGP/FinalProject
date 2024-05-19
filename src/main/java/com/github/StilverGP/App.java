@@ -1,6 +1,6 @@
 package com.github.StilverGP;
 
-import com.github.StilverGP.view.AppController;
+import com.github.StilverGP.controller.AppController;
 import com.github.StilverGP.view.Scenes;
 import com.github.StilverGP.view.View;
 import javafx.application.Application;

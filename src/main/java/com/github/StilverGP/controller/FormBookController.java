@@ -1,7 +1,6 @@
-package com.github.StilverGP.view;
+package com.github.StilverGP.controller;
 
 import com.github.StilverGP.model.Session;
-import com.github.StilverGP.model.dao.BookDAO;
 import com.github.StilverGP.model.dao.RoomDAO;
 import com.github.StilverGP.model.entity.Book;
 import com.github.StilverGP.model.entity.Room;
@@ -15,7 +14,6 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -37,6 +35,11 @@ public class FormBookController extends Controller implements Initializable {
         this.controller = (MainController) input;
     }
 
+    /**
+     * Adds a new book if the room is available and the dates are valid.
+     *
+     * @param event the event that triggered the method.
+     */
     public void addBook(Event event) {
         RoomDAO roomDAO = new RoomDAO();
         Room room = roomDAO.findById(Integer.valueOf(roomNumber.getText()));
@@ -59,6 +62,11 @@ public class FormBookController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Generates a code for a book.
+     *
+     * @return a code for the book.
+     */
     public String generateBookCode() {
         int cod_bookLength = 5;
         String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";

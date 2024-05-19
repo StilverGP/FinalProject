@@ -1,10 +1,11 @@
-package com.github.StilverGP.view;
+package com.github.StilverGP.controller;
 
 import com.github.StilverGP.App;
 import com.github.StilverGP.model.Session;
 import com.github.StilverGP.model.dao.BookDAO;
 import com.github.StilverGP.model.entity.Book;
 import com.github.StilverGP.utils.Alerts;
+import com.github.StilverGP.view.Scenes;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -41,11 +42,18 @@ public class MyBooksController extends Controller implements Initializable {
 
     private ObservableList<Book> books;
 
+    private MainController controller;
+
     @Override
     public void onOpen(Object input) {
+        this.controller = (MainController) input;
         reloadBooksFromDatabase();
     }
 
+    /**
+     * Reloads the list of books from the database for the logged-in user
+     * and updates the tableView.
+     */
     public void reloadBooksFromDatabase() {
         BookDAO bookDAO = new BookDAO();
         List<Book> books = bookDAO.findByUser(Session.getInstance().getLoggedInUser());
@@ -53,14 +61,26 @@ public class MyBooksController extends Controller implements Initializable {
         tableView.setItems(this.books);
     }
 
+    /**
+     * Opens the form modal window to delete a booked room.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     public void delBook() throws IOException {
-        App.currentController.openModal(Scenes.FORMDELETEBOOK, "Cancelando reserva...", this, null);
+        App.currentController.openModal(Scenes.FORMDELETEBOOK, "Cancelando reserva...",this, null);
     }
 
+
+    /**
+     * Deletes the specified book from the database and reloads the list of books for the logged-in user.
+     *
+     * @param book the booked room to be deleted.
+     */
     public void deleteBook(Book book) {
         BookDAO bookDAO = new BookDAO();
         bookDAO.delete(book);
         reloadBooksFromDatabase();
+        this.controller.reloadRoomsFromDataBase();
     }
 
     @Override
@@ -71,6 +91,7 @@ public class MyBooksController extends Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableView.setEditable(true);
+
         codBook.setCellValueFactory(book -> new SimpleStringProperty(book.getValue().getCod_book()));
         codBook.setOnEditCommit(event -> {
             if (event.getNewValue() == event.getOldValue() || event.getNewValue().isEmpty()) return;

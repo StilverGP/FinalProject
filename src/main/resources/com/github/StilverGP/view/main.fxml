@@ -7,10 +7,24 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="515.0" prefWidth="604.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.StilverGP.view.MainController">
+<VBox alignment="CENTER_RIGHT" prefHeight="515.0" prefWidth="604.0" spacing="20.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.github.StilverGP.controller.MainController">
     <children>
-        <Label text="Habitaciones" />
+      <HBox alignment="CENTER" prefHeight="7.0" prefWidth="564.0">
+         <children>
+              <Label text="Lista de Habitaciones">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="564.0">
+         <children>
+            <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#myBooks" text="Mis reservas" />
+         </children>
+      </HBox>
         <TableView fx:id="tableView">
             <columns>
                 <TableColumn fx:id="imageColumn" prefWidth="95.0" text="Foto" />
@@ -24,8 +38,12 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-      <Button mnemonicParsing="false" onAction="#addBook" prefWidth="99.0" text="Realizar reserva" />
-      <HBox fx:id="adminHBox" alignment="CENTER" disable="true" prefHeight="20.0" prefWidth="564.0" visible="false">
+      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="564.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#addBook" prefWidth="99.0" text="Realizar reserva" />
+         </children>
+      </HBox>
+      <HBox fx:id="adminHBox" alignment="CENTER" disable="true" prefHeight="0.0" prefWidth="564.0" visible="false">
          <children>
             <Button fx:id="addRoom" mnemonicParsing="false" onAction="#addRoom" text="Añadir habitación" />
             <Button fx:id="deleteRoom" mnemonicParsing="false" onAction="#removeRoom" text="Eliminar habitación" />

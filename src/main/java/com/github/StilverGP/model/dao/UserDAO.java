@@ -23,6 +23,12 @@ public class UserDAO implements DAO<User, String> {
         conn = ConnectionMariaDB.getConnection();
     }
 
+    /**
+     * Adds a new User to the database.
+     *
+     * @param entity the User to be added to the database.
+     * @return the added User.
+     */
     @Override
     public User add(User entity) {
         User user = entity;
@@ -49,6 +55,12 @@ public class UserDAO implements DAO<User, String> {
         return user;
     }
 
+    /**
+     * Updates a User 'username' in the database.
+     *
+     * @param entity the User to be updated.
+     * @return the updated User.
+     */
     @Override
     public User update(User entity) {
         User user = entity;
@@ -70,6 +82,12 @@ public class UserDAO implements DAO<User, String> {
         return user;
     }
 
+    /**
+     * Updates a User 'name' in the database.
+     *
+     * @param entity the User to be updated.
+     * @return the updated User.
+     */
     public User updateName(User entity) {
         User user = entity;
         if (entity != null) {
@@ -90,6 +108,12 @@ public class UserDAO implements DAO<User, String> {
         return user;
     }
 
+    /**
+     * Updates a User 'mail' in the database.
+     *
+     * @param entity the User to be updated.
+     * @return the updated User.
+     */
     public User updateMail(User entity) {
         User user = entity;
         if (entity != null) {
@@ -110,6 +134,12 @@ public class UserDAO implements DAO<User, String> {
         return user;
     }
 
+    /**
+     * Finds a User in the database by its ID.
+     *
+     * @param id the ID of the User to find.
+     * @return the found User, or null if not found.
+     */
     @Override
     public User findById(String id) {
         User result = null;
@@ -135,6 +165,12 @@ public class UserDAO implements DAO<User, String> {
         return result;
     }
 
+    /**
+     * Deletes a User from the database.
+     *
+     * @param entity the User to be deleted.
+     * @return the deleted User, or null if the deletion fails.
+     */
     @Override
     public User delete(User entity) {
         if (entity != null) {

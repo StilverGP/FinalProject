@@ -78,6 +78,12 @@ public class User {
         this.phone = phone;
     }
 
+    /**
+     * Checks if the provided password matches the stored hashed password.
+     *
+     * @param password the password to be checked.
+     * @return true if the provided password matches the stored hashed password, false if not.
+     */
     public boolean isMyPassword(String password) {
         return this.password.equals(Security.hashPassword(password));
     }

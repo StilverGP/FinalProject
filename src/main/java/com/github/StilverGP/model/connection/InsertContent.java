@@ -14,6 +14,9 @@ import java.util.List;
 
 public class InsertContent {
 
+    /**
+     * Adds a default admin user to the database if it does not already exist.
+     */
     public static void addDefaultUser() {
         UserDAO uDAO = new UserDAO();
 
@@ -24,6 +27,9 @@ public class InsertContent {
         }
     }
 
+    /**
+     * Adds the default rooms to the database.
+     */
     public static void addDefaultRooms() throws IOException {
         RoomDAO roomDAO = new RoomDAO();
         List<Room> roomList = new ArrayList<>();

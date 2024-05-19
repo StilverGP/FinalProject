@@ -50,6 +50,10 @@ public class InitializeDatabase {
 
     }
 
+    /**
+     * Initializes the database by creating it, creating the necessary tables,
+     * inserting default data, and then closing the connection.
+     */
     public void initialize() {
         createDatabase();
         createTables();
@@ -57,6 +61,9 @@ public class InitializeDatabase {
         closeConnection();
     }
 
+    /**
+     * Creates the database.
+     */
     private void createDatabase() {
         try (PreparedStatement pst = conn.prepareStatement(CREATEDATABASE)) {
             pst.executeUpdate();
@@ -66,6 +73,9 @@ public class InitializeDatabase {
         }
     }
 
+    /**
+     * Switches to the new created database.
+     */
     private void useDatabase() {
         try (PreparedStatement upst = conn.prepareStatement(USEDATABASE)) {
             upst.executeUpdate();
@@ -74,6 +84,9 @@ public class InitializeDatabase {
         }
     }
 
+    /**
+     * Creates the necessary tables in the database.
+     */
     private void createTables() {
         try (PreparedStatement pst = conn.prepareStatement(CREATETABLEUSER)) {
             pst.executeUpdate();
@@ -92,6 +105,9 @@ public class InitializeDatabase {
         }
     }
 
+    /**
+     * Inserts default data into the database.
+     */
     private void insertDefaultData() {
         try {
             InsertContent.addDefaultUser();
@@ -101,6 +117,9 @@ public class InitializeDatabase {
         }
     }
 
+    /**
+     * Closes the database connection.
+     */
     public void closeConnection() {
         try {
             if (conn != null) {

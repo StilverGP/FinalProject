@@ -29,6 +29,12 @@ public class RoomDAO implements DAO<Room, Integer> {
         conn = ConnectionMariaDB.getConnection();
     }
 
+    /**
+     * Adds a new Room to the database.
+     *
+     * @param entity the Room to be added to the database.
+     * @return the added Room.
+     */
     @Override
     public Room add(Room entity) {
         Room room = entity;
@@ -54,6 +60,12 @@ public class RoomDAO implements DAO<Room, Integer> {
         return room;
     }
 
+    /**
+     * Updates a Room 'room_number' in the database.
+     *
+     * @param entity the Room to be updated.
+     * @return the updated Room.
+     */
     @Override
     public Room update(Room entity) {
         Room room = entity;
@@ -75,6 +87,12 @@ public class RoomDAO implements DAO<Room, Integer> {
         return room;
     }
 
+    /**
+     * Updates a Room 'price_night' in the database.
+     *
+     * @param entity the Room to be updated.
+     * @return the updated Room.
+     */
     public Room updatePrice(Room entity) {
         Room room = entity;
         if (entity != null) {
@@ -96,6 +114,12 @@ public class RoomDAO implements DAO<Room, Integer> {
         return room;
     }
 
+    /**
+     * Updates a Room availability in the database.
+     *
+     * @param entity the Room to be updated.
+     * @return the updated Room.
+     */
     public Room updateAvailability(Room entity) {
         Room room = entity;
         if (entity != null) {
@@ -117,6 +141,11 @@ public class RoomDAO implements DAO<Room, Integer> {
         return room;
     }
 
+    /**
+     * Retrieves all Rooms from the database.
+     *
+     * @return a list containing all Rooms.
+     */
     public List<Room> findAll() {
         List<Room> rooms = new ArrayList<>();
         try (PreparedStatement pst = conn.prepareStatement(FINDALL)){
@@ -145,6 +174,11 @@ public class RoomDAO implements DAO<Room, Integer> {
         return rooms;
     }
 
+    /**
+     * Retrieves all available Rooms from the database.
+     *
+     * @return a list containing all available Rooms.
+     */
     public List<Room> findAllAvailable() {
         List<Room> rooms = new ArrayList<>();
         try (PreparedStatement pst = conn.prepareStatement(FINDALLAVAILABLE)){
@@ -173,6 +207,12 @@ public class RoomDAO implements DAO<Room, Integer> {
         return rooms;
     }
 
+    /**
+     * Finds a Room in the database by its ID.
+     *
+     * @param id the ID of the Room to find.
+     * @return the found Room, or null if not found.
+     */
     @Override
     public Room findById(Integer id) {
         Room result = null;
@@ -202,6 +242,12 @@ public class RoomDAO implements DAO<Room, Integer> {
         return result;
     }
 
+    /**
+     * Deletes a Room from the database.
+     *
+     * @param entity the Room to be deleted.
+     * @return the deleted Room, or null if the deletion fails.
+     */
     @Override
     public Room delete(Room entity) {
         if (entity != null) {
@@ -221,6 +267,12 @@ public class RoomDAO implements DAO<Room, Integer> {
 
     }
 
+    /**
+     * Converts a BufferedImage to an InputStream.
+     *
+     * @param image the BufferedImage to be converted.
+     * @return an InputStream representing the BufferedImage.
+     */
     public InputStream imageToStream(BufferedImage image) {
         ByteArrayInputStream bais = null;
         if (image != null) {
