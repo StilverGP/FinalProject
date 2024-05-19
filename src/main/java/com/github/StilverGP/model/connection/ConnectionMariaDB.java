@@ -31,14 +31,4 @@ public class ConnectionMariaDB {
         }
         return conn;
     }
-
-    public static void closeConnection() {
-        if(conn!=null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

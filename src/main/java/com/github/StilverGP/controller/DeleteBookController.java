@@ -1,4 +1,4 @@
-package com.github.StilverGP.view;
+package com.github.StilverGP.controller;
 
 import com.github.StilverGP.model.Session;
 import com.github.StilverGP.model.dao.BookDAO;
@@ -7,6 +7,7 @@ import com.github.StilverGP.model.entity.Book;
 import com.github.StilverGP.model.entity.Room;
 import com.github.StilverGP.utils.Alerts;
 import com.github.StilverGP.utils.Security;
+import com.sun.tools.javac.Main;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +18,6 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class DeleteBookController extends Controller implements Initializable {
@@ -35,6 +35,11 @@ public class DeleteBookController extends Controller implements Initializable {
         this.controller = (MyBooksController) input;
     }
 
+    /**
+     * Deletes a book if the user's password is correct and the action is confirmed.
+     *
+     * @param event the event that triggered the method.
+     */
     public void deleteBook(Event event) {
         if (Session.getInstance().getLoggedInUser().isMyPassword(Security.hashPassword(password.getText()))) {
             BookDAO bookDAO = new BookDAO();
@@ -53,6 +58,12 @@ public class DeleteBookController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Deletes the book and closes the window.
+     *
+     * @param book the book (reservation) to be deleted.
+     * @param event the event that triggered the deletion.
+     */
     public void deleteAndCloseWindow(Book book, Event event) {
         this.controller.deleteBook(book);
         ((Node) (event.getSource())).getScene().getWindow().hide();

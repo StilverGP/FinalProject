@@ -1,4 +1,4 @@
-package com.github.StilverGP.view;
+package com.github.StilverGP.controller;
 
 import com.github.StilverGP.App;
 import com.github.StilverGP.model.Session;
@@ -7,6 +7,7 @@ import com.github.StilverGP.model.dao.RoomDAO;
 import com.github.StilverGP.model.entity.Book;
 import com.github.StilverGP.model.entity.Room;
 import com.github.StilverGP.utils.Alerts;
+import com.github.StilverGP.view.Scenes;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -65,8 +66,12 @@ public class MainController extends Controller implements Initializable {
 
     private ObservableList<Room> rooms;
 
-    private boolean isBookAdded = false;
-
+    /**
+     * Enables room management options for admin users,
+     * reloads room data from the database, and updates the tableView.
+     *
+     * @param input the input object.
+     */
     @Override
     public void onOpen(Object input) {
         if (LoginController.checkUserIsAdmin()) {
@@ -80,26 +85,49 @@ public class MainController extends Controller implements Initializable {
         reloadRoomsFromDataBase();
     }
 
+    /**
+     * Opens the form in a modal window to add a new room.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     public void addRoom() throws IOException {
         App.currentController.openModal(Scenes.FORMROOM, "Agregando habitación...", this, null);
     }
 
+    /**
+     * Opens the form in a modal window to remove a room.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     public void removeRoom() throws IOException {
         App.currentController.openModal(Scenes.FORMDELETEROOM, "Eliminando habitación...", this, null);
     }
 
+    /**
+     * Saves a new room to the database.
+     *
+     * @param room the room to be saved.
+     */
     public void saveRoom(Room room) {
         RoomDAO roomDAO = new RoomDAO();
         roomDAO.add(room);
         reloadRoomsFromDataBase();
     }
 
+    /**
+     * Deletes a room from the database.
+     *
+     * @param room the room to be deleted.
+     */
     public void deleteRoom(Room room) {
         RoomDAO roomDAO = new RoomDAO();
         roomDAO.delete(room);
         reloadRoomsFromDataBase();
     }
 
+    /**
+     * Reloads the list of rooms from the database and updates the tableView.
+     */
     public void reloadRoomsFromDataBase() {
         RoomDAO rDAO = new RoomDAO();
         List<Room> rooms;
@@ -112,21 +140,41 @@ public class MainController extends Controller implements Initializable {
         tableView.setItems(this.rooms);
     }
 
+    /**
+     * Opens the form to add a new book.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     public void addBook() throws IOException {
         App.currentController.openModal(Scenes.FORMBOOK, "Agregando reserva...", this, null);
-        if (isBookAdded) {
-            reloadRoomsFromDataBase();
-            isBookAdded = false;
-        }
     }
 
+    /**
+     * Saves a new book to the database.
+     *
+     * @param book the booking to be saved.
+     */
     public void saveBook(Book book) {
         BookDAO bookDAO = new BookDAO();
         bookDAO.add(book);
-        isBookAdded = true;
         reloadRoomsFromDataBase();
     }
 
+    /**
+     * Opens a modal window with the current user's books.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
+    public void myBooks() throws IOException {
+        App.currentController.openModal(Scenes.MYBOOKS, "Mis reservas", this, null);
+    }
+
+    /**
+     * Converts a BufferedImage to a JavaFX Image.
+     *
+     * @param roomImage the BufferedImage to be converted.
+     * @return the converted JavaFX Image.
+     */
     public Image convertToJavaFXImage(BufferedImage roomImage) {
         Image image = null;
         if (roomImage != null) {

@@ -1,4 +1,4 @@
-package com.github.StilverGP.view;
+package com.github.StilverGP.controller;
 
 import com.github.StilverGP.model.dao.RoomDAO;
 import com.github.StilverGP.model.entity.Room;
@@ -53,6 +53,11 @@ public class FormRoomController extends Controller implements Initializable {
         this.controller = (MainController) input;
     }
 
+    /**
+     * Adds a new room if it does not already exist.
+     *
+     * @param event the event that triggered the method.
+     */
     public void addRoom(Event event) {
         RoomDAO roomDAO = new RoomDAO();
         Room roomExists = roomDAO.findById(Integer.valueOf(roomNumber.getText()));
@@ -70,6 +75,12 @@ public class FormRoomController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Opens a file chooser to select an image for the room and updates the image view.
+     *
+     * @param event the event that triggered the method.
+     * @throws IOException if an I/O error occurs.
+     */
     public void getImage(Event event) throws IOException {
         Window window = ((Node) (event.getSource())).getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
@@ -85,6 +96,12 @@ public class FormRoomController extends Controller implements Initializable {
         imageView.setFitWidth(85);
     }
 
+    /**
+     * Saves the room and closes the window.
+     *
+     * @param room the room to be saved.
+     * @param event the event that triggered the method.
+     */
     public void saveAndCloseWindow(Room room, Event event) {
         this.controller.saveRoom(room);
         ((Node) (event.getSource())).getScene().getWindow().hide();

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.github.StilverGP.view.DeleteBookController">
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.github.StilverGP.controller.DeleteBookController">
    <children>
       <AnchorPane prefHeight="231.0" prefWidth="383.0">
          <children>

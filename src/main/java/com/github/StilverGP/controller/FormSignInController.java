@@ -1,4 +1,4 @@
-package com.github.StilverGP.view;
+package com.github.StilverGP.controller;
 
 import com.github.StilverGP.model.dao.UserDAO;
 import com.github.StilverGP.model.entity.User;
@@ -54,6 +54,11 @@ public class FormSignInController extends Controller implements Initializable {
 
     }
 
+    /**
+     * Adds a new user if the user does not already exist and the passwords match.
+     *
+     * @param event the event that triggered the method.
+     */
     public void addUser(Event event) {
         UserDAO userDAO = new UserDAO();
         User userExists = userDAO.findById(username.getText());

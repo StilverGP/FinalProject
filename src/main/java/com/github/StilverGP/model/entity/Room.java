@@ -79,6 +79,12 @@ public class Room {
         this.available = available;
     }
 
+    /**
+     * Converts a String value to a RoomType enum value.
+     *
+     * @param value the String representing the RoomType.
+     * @return the RoomType enum corresponding to the String.
+     */
     public RoomType setRoomTypeValue(String value) {
         RoomType type = null;
         if (value.matches("Estandar")) type = RoomType.STANDARD;
@@ -88,6 +94,12 @@ public class Room {
         return type;
     }
 
+    /**
+     * Converts a RoomType enum to its corresponding String value.
+     *
+     * @param type the RoomType enum.
+     * @return the String value representing the RoomType.
+     */
     public String getRoomTypeValue(RoomType type) {
         String typeValue = "";
         if (type == RoomType.STANDARD) typeValue = "Estandar";
@@ -97,6 +109,12 @@ public class Room {
         return typeValue;
     }
 
+    /**
+     * Converts a boolean value to its corresponding availability String value.
+     *
+     * @param available the boolean value representing the availability.
+     * @return the availability String value ("Disponible" or "Ocupada").
+     */
     public String getAvailabilityValue(Boolean available) {
         String abailavilityValue = "";
         if (available) abailavilityValue = "Disponible";
@@ -104,6 +122,12 @@ public class Room {
         return abailavilityValue;
     }
 
+    /**
+     * Converts an availability String value to its corresponding boolean value.
+     *
+     * @param s the availability String value ("disponible" or "ocupada").
+     * @return the boolean value representing the availability.
+     */
     public boolean setAvailabilityValue(String s) {
         boolean available = true;
         if (s.matches("disponible")) available = true;

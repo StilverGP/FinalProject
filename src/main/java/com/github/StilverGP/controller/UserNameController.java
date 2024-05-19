@@ -1,4 +1,4 @@
-package com.github.StilverGP.view;
+package com.github.StilverGP.controller;
 
 import com.github.StilverGP.model.Session;
 import com.github.StilverGP.model.dao.UserDAO;
@@ -31,6 +31,11 @@ public class UserNameController extends Controller implements Initializable {
         this.controller = (AppController) input;
     }
 
+    /**
+     * Updates the user's name if the user confirms the action and provides the correct password.
+     *
+     * @param event the event that triggered the method.
+     */
     public void updateUser(Event event) {
         UserDAO userDAO = new UserDAO();
         User user = userDAO.findById(Session.getInstance().getLoggedInUser().getUsername());
@@ -62,6 +67,12 @@ public class UserNameController extends Controller implements Initializable {
 
     }
 
+    /**
+     * Saves the updated user's name and closes the window.
+     *
+     * @param user  the user object containing the updated name.
+     * @param event the event that triggered the method.
+     */
     public void saveAndCloseWindow(User user, Event event) {
         this.controller.updateUserName(user);
         ((Node) (event.getSource())).getScene().getWindow().hide();

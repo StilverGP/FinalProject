@@ -17,7 +17,6 @@ public class BookDAO implements DAO<Book, String> {
     private static final String UPDATECHECKOUTDATE = "UPDATE Book SET checkOut_date=? WHERE id_book=?";
     private static final String FINDBYID = "SELECT id_book, cod_book, checkIn_date, checkOut_date, id_user, id_room FROM Book WHERE cod_book=?";
     private static final String FINDBYUSER = "SELECT id_book, cod_book, checkIn_date, checkOut_date, id_user, id_room FROM Book WHERE id_user=?";
-    private static final String FINDBYROOM = "SELECT id_book, cod_book, checkIn_date, checkOut_date, id_user, id_room FROM Book WHERE id_room=?";
     private static final String DELETE = "DELETE FROM Book WHERE id_book=?";
 
     Connection conn;
@@ -26,6 +25,12 @@ public class BookDAO implements DAO<Book, String> {
         conn = ConnectionMariaDB.getConnection();
     }
 
+    /**
+     * Adds a new Book to the database.
+     *
+     * @param entity the Book to be added to the database.
+     * @return the added Book.
+     */
     @Override
     public Book add(Book entity) {
         Book book = entity;
@@ -50,6 +55,12 @@ public class BookDAO implements DAO<Book, String> {
         return book;
     }
 
+    /**
+     * Updates a Book 'cod_book' in the database.
+     *
+     * @param entity the Book entity to be updated.
+     * @return the updated Book entity.
+     */
     @Override
     public Book update(Book entity) {
         Book book = entity;
@@ -71,6 +82,12 @@ public class BookDAO implements DAO<Book, String> {
         return book;
     }
 
+    /**
+     * Updates a Book 'checkIn_date' in the database.
+     *
+     * @param entity the Book entity to be updated.
+     * @return the updated Book entity.
+     */
     public Book updateCheckIn(Book entity) {
         Book book = entity;
         if (entity != null) {
@@ -91,6 +108,12 @@ public class BookDAO implements DAO<Book, String> {
         return book;
     }
 
+    /**
+     * Updates a Book 'checkOut_date' in the database.
+     *
+     * @param entity the Book entity to be updated.
+     * @return the updated Book entity.
+     */
     public Book updateCheckOut(Book entity) {
         Book book = entity;
         if (entity != null) {
@@ -111,6 +134,12 @@ public class BookDAO implements DAO<Book, String> {
         return book;
     }
 
+    /**
+     * Finds a Book in the database by its ID.
+     *
+     * @param id the ID of the Book entity to find.
+     * @return the found Book, or null if not found.
+     */
     @Override
     public Book findById(String id) {
         Book result = null;
@@ -136,6 +165,12 @@ public class BookDAO implements DAO<Book, String> {
         return result;
     }
 
+    /**
+     * Finds all Books associated with a given User.
+     *
+     * @param user the User whose books want to be found.
+     * @return a list of Books associated with the User.
+     */
     public List<Book> findByUser(User user) {
         List<Book> books = new ArrayList<>();
         if (user != null) {
@@ -161,31 +196,12 @@ public class BookDAO implements DAO<Book, String> {
         return books;
     }
 
-    public List<Book> findByRoom(Room room) {
-        List<Book> books = new ArrayList<>();
-        if (room != null) {
-            try (PreparedStatement pst = conn.prepareStatement(FINDBYROOM)) {
-                pst.setInt(1, room.getId_Room());
-                try (ResultSet rs = pst.executeQuery()) {
-                    while (rs.next()) {
-                        Book book = new Book();
-                        book.setId(rs.getInt("id_book"));
-                        book.setCod_book(rs.getString("cod_book"));
-                        book.setCheckIn_date(rs.getDate("checkIn_date").toLocalDate());
-                        book.setCheckOut_date(rs.getDate("checkOut_date").toLocalDate());
-                        UserDAO uDAO = new UserDAO();
-                        book.setUser(uDAO.findById(rs.getString("id_user")));
-                        book.setRoom(room);
-                        books.add(book);
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return books;
-    }
-
+    /**
+     * Deletes a Book from the database.
+     *
+     * @param entity the Book to be deleted.
+     * @return the deleted Book, or null if the deletion fails.
+     */
     @Override
     public Book delete(Book entity) {
         if (entity != null) {
@@ -201,7 +217,7 @@ public class BookDAO implements DAO<Book, String> {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
 
     }
 }
