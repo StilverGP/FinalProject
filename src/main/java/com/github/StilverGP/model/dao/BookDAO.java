@@ -2,10 +2,8 @@ package com.github.StilverGP.model.dao;
 
 import com.github.StilverGP.model.connection.ConnectionMariaDB;
 import com.github.StilverGP.model.entity.Book;
-import com.github.StilverGP.model.entity.Room;
 import com.github.StilverGP.model.entity.User;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

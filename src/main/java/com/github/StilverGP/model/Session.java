@@ -2,7 +2,7 @@ package com.github.StilverGP.model;
 
 import com.github.StilverGP.model.entity.User;
 
-public class Session {
+public class Session implements SessionInterface {
     private static Session _instance;
     private User loggedInUser;
 
@@ -22,6 +22,7 @@ public class Session {
      *
      * @return the currently logged-in user, or null if no user is logged in.
      */
+    @Override
     public User getLoggedInUser() {
         return loggedInUser;
     }
@@ -31,6 +32,7 @@ public class Session {
      *
      * @param user the user to be logged in.
      */
+    @Override
     public void login(User user) {
         loggedInUser = user;
     }
@@ -38,6 +40,7 @@ public class Session {
     /**
      * Logs out the currently logged-in user.
      */
+    @Override
     public void logout() {
         loggedInUser = null;
     }
@@ -47,6 +50,7 @@ public class Session {
      *
      * @return true if a user is logged in, false otherwise.
      */
+    @Override
     public boolean isLoggedIn() {
         return loggedInUser != null;
     }

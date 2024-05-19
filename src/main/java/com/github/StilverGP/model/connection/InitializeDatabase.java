@@ -3,7 +3,7 @@ package com.github.StilverGP.model.connection;
 import java.io.IOException;
 import java.sql.*;
 
-public class InitializeDatabase {
+public class InitializeDatabase implements InitializeDatabaseInterfce {
     private static final String CREATEDATABASE = "CREATE DATABASE IF NOT EXISTS hotel";
     private static final String USEDATABASE = "USE hotel";
     private static final String CREATETABLEUSER = "create table if not exists User " +
@@ -54,6 +54,7 @@ public class InitializeDatabase {
      * Initializes the database by creating it, creating the necessary tables,
      * inserting default data, and then closing the connection.
      */
+    @Override
     public void initialize() {
         createDatabase();
         createTables();
@@ -64,7 +65,8 @@ public class InitializeDatabase {
     /**
      * Creates the database.
      */
-    private void createDatabase() {
+    @Override
+    public void createDatabase() {
         try (PreparedStatement pst = conn.prepareStatement(CREATEDATABASE)) {
             pst.executeUpdate();
             useDatabase();
@@ -76,7 +78,8 @@ public class InitializeDatabase {
     /**
      * Switches to the new created database.
      */
-    private void useDatabase() {
+    @Override
+    public void useDatabase() {
         try (PreparedStatement upst = conn.prepareStatement(USEDATABASE)) {
             upst.executeUpdate();
         } catch (SQLException e) {
@@ -87,7 +90,8 @@ public class InitializeDatabase {
     /**
      * Creates the necessary tables in the database.
      */
-    private void createTables() {
+    @Override
+    public void createTables() {
         try (PreparedStatement pst = conn.prepareStatement(CREATETABLEUSER)) {
             pst.executeUpdate();
         } catch (SQLException e) {
@@ -108,7 +112,8 @@ public class InitializeDatabase {
     /**
      * Inserts default data into the database.
      */
-    private void insertDefaultData() {
+    @Override
+    public void insertDefaultData() {
         try {
             InsertContent.addDefaultUser();
             InsertContent.addDefaultRooms();
@@ -120,6 +125,7 @@ public class InitializeDatabase {
     /**
      * Closes the database connection.
      */
+    @Override
     public void closeConnection() {
         try {
             if (conn != null) {
