@@ -5,11 +5,16 @@ import com.github.StilverGP.model.dao.RoomDAO;
 import com.github.StilverGP.model.entity.Book;
 import com.github.StilverGP.model.entity.Room;
 import com.github.StilverGP.utils.Alerts;
+import javafx.beans.value.ChangeListener;
+
+import java.time.temporal.ChronoUnit;
+
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -27,6 +32,9 @@ public class FormBookController extends Controller implements Initializable {
 
     @FXML
     private TextField roomNumber;
+
+    @FXML
+    private Label totalPrice;
 
     private MainController controller;
 
@@ -83,8 +91,33 @@ public class FormBookController extends Controller implements Initializable {
 
     }
 
+    private void calculateTotalPrice() {
+        if (checkInDate.getValue() != null && checkOutDate.getValue() != null && !roomNumber.getText().isEmpty()) {
+            RoomDAO roomDAO = new RoomDAO();
+            Room room = roomDAO.findById(Integer.valueOf(roomNumber.getText()));
+            if (room != null) {
+                long daysBetween = ChronoUnit.DAYS.between(checkInDate.getValue(), checkOutDate.getValue());
+                if (daysBetween > 0) {
+                    double price = daysBetween * room.getPriceNight();
+                    totalPrice.setText(price + " €");
+                } else if (daysBetween == 0) {
+                    totalPrice.setText(room.getPriceNight() + " €");
+                } else {
+                    totalPrice.setText("0 €");
+                }
+            } else {
+                totalPrice.setText("0 €");
+            }
+        } else {
+            totalPrice.setText("0 €");
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        ChangeListener<Object> changeListener = (observable, oldValue, newValue) -> calculateTotalPrice();
+        checkInDate.valueProperty().addListener(changeListener);
+        checkOutDate.valueProperty().addListener(changeListener);
+        roomNumber.textProperty().addListener(changeListener);
     }
 }

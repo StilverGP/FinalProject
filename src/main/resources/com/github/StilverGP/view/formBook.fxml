@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="349.0" prefWidth="414.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.github.StilverGP.controller.FormBookController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="349.0" prefWidth="414.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.StilverGP.controller.FormBookController">
    <children>
       <AnchorPane prefHeight="349.0" prefWidth="397.0">
          <children>
@@ -38,6 +38,12 @@
                </font>
             </Label>
             <Button layoutX="160.0" layoutY="277.0" mnemonicParsing="false" onAction="#addBook" text="Realizar reserva" />
+            <Label layoutX="8.0" layoutY="280.0" text="Precio total:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalPrice" layoutX="88.0" layoutY="281.0" text="0€" />
          </children>
       </AnchorPane>
    </children>

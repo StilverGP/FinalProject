@@ -42,7 +42,7 @@ public class UserNameController extends Controller implements Initializable {
         Alerts.showConfirmationAlert("Actualización de nombre",
                 "Esta a punto de actualizar su nombre, " +
                         "¿Está totalmente seguro de esta acción?").showAndWait().ifPresent(response -> {
-            if (Session.getInstance().getLoggedInUser().getName().equals(name.getText())) {
+            if (!Session.getInstance().getLoggedInUser().getName().equals(name.getText())) {
                 if (Session.getInstance().getLoggedInUser().isMyPassword(Security.hashPassword(password.getText()))) {
                     if (response == ButtonType.OK) {
                         user.setUsername(name.getText());
