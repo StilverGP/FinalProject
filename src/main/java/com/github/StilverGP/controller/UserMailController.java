@@ -42,7 +42,7 @@ public class UserMailController extends Controller implements Initializable {
         Alerts.showConfirmationAlert("Actualización de mail",
                 "Esta a punto de actualizar su mail, " +
                         "¿Está totalmente seguro de esta acción?").showAndWait().ifPresent(response -> {
-            if (Session.getInstance().getLoggedInUser().getMail().equals(mail.getText())) {
+            if (!Session.getInstance().getLoggedInUser().getMail().equals(mail.getText())) {
                 if (Session.getInstance().getLoggedInUser().isMyPassword(Security.hashPassword(password.getText()))) {
                     if (response == ButtonType.OK) {
                         user.setUsername(mail.getText());
